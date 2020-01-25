@@ -2,7 +2,7 @@
 
 assetManager::assetManager()
 {
-    Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
+    Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
 }
 
 assetManager::~assetManager()

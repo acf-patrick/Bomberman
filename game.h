@@ -16,7 +16,7 @@ private:
 	Mix_Music *startscreen, *stagestart;
 
 	void start();
-	void regulate_FPS(); // juste nafindra tato ftsn lay codenla
+	void regulate_FPS();
 
 public:
 	Game();

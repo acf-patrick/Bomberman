@@ -38,7 +38,7 @@ void Game::start()
         SDL_Flip(screen);
         SDL_PollEvent(&event);
         if (event.type == SDL_KEYDOWN)
-            at_start_s = false; //ito mcontrole anle fps ho 6pfps sady tsy mampihinana cpu be
+            at_start_s = false;
         regulate_FPS();
     }
 }

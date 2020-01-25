@@ -12,8 +12,7 @@ private:
 	SDL_Surface *screen, *start_s;
 	bool running, at_start_s;
 	Timer fps_t;
-	assetManager asset_Manager;
-	Mix_Music *startscreen, *stagestart;
+	AssetManager asset_Manager;
 
 	void start();
 	void regulate_FPS();

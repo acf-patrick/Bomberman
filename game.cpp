@@ -1,10 +1,11 @@
 #include "game.h"
+#include "defs.h"
 
 Game::Game()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-    start_s = IMG_Load("./data/images/start_s.png"); //ito ilay ecran titre, tokony atao sprite maromaro amzay maivana le image
+    start_s = IMG_Load("./data/images/start_s.png");
     running = false;
     at_start_s = true;
 }
@@ -18,12 +19,12 @@ Game::~Game()
 
 void Game::run()
 {
-    start(); //mlance ecran titre fotsiny ito
+    start();
 }
 
 void Game::start()
 {
-    start_t.start();
+    fps_t.start();
     while (at_start_s)
     {
         SDL_Event event;
@@ -31,11 +32,14 @@ void Game::start()
         SDL_Flip(screen);
         SDL_PollEvent(&event);
         if (event.type == SDL_KEYDOWN)
-            at_start_s = false;
-            //mbola tsisy choix fa rehefa mikitika touche dia tapitra 
-        if (start_t.get_time() < 1000/FPS)
-            SDL_Delay(1000/FPS - start_t.get_time()); //ito mcontrole anle fps ho 6pfps sady tsy mampihinana cpu be
+            at_start_s = false; //ito mcontrole anle fps ho 6pfps sady tsy mampihinana cpu be
+        regulate_FPS();
     }
 }
 
-
+void Game::regulate_FPS()
+{
+    int t = fps_t.get_elapsed_time();
+    if (t < 1000/FPS)
+        SDL_Delay(1000/FPS - t);
+}

@@ -4,29 +4,33 @@ Timer::Timer()
 {
 	start_time = 0;
 	stop_time = 0;
-	is_running = false;
-	is_stopped = false;
+	state = STOPPED;
 }
 
 void Timer::start()
 {
 	start_time = SDL_GetTicks();
-	is_running = true;
+	state = RUNNING;
 }
 
 void Timer::stop()
 {
-	is_running = false;
-	is_stopped = true;
+	state = STOPPED;
 	start_time = 0;
+	stop_time = SDL_GetTicks();
 }
 
-float Timer::get_time()
+int Timer::get_elapsed_time()
 {
 	return SDL_GetTicks() - start_time;
 }
 
+int Timer::get_stop_time()
+{
+	return stop_time;
+}
+
 bool Timer::get_state()
 {
-	return is_running;
+	return state == RUNNING;
 }

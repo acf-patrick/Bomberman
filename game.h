@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -8,15 +7,17 @@
 
 class Game
 {
-    private:
-        SDL_Surface *screen, *start_s;
-        bool running, at_start_s;
-        Timer start_t;
-    public:
-        Game();
-        ~Game();
-        void run();
-        void start();
+private:
+	SDL_Surface *screen, *start_s;
+	bool running, at_start_s;
+	Timer fps_t;
+
+	void start();
+	void regulate_FPS(); // juste nafindra tato ftsn lay codenla
+
+public:
+	Game();
+	~Game();
+	void run();
 };
 
-#endif // GAME_H

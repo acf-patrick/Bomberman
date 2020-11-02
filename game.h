@@ -13,6 +13,7 @@ private:
 	bool running, at_start_s;
 	Timer fps_t;
 	assetManager asset_Manager;
+	Mix_Music *startscreen, *stagestart;
 
 	void start();
 	void regulate_FPS(); // juste nafindra tato ftsn lay codenla

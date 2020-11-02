@@ -6,6 +6,8 @@ Game::Game()
     SDL_Init(SDL_INIT_EVERYTHING);
     screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
     start_s = asset_Manager.load_surface("./data/images/start_s.png");
+    startscreen = asset_Manager.load_music("./data/sounds/titlescreen.mp3");
+    stagestart = asset_Manager.load_music("./data/sounds/stagestart.mp3");
     running = false;
     at_start_s = true;
 }
@@ -14,6 +16,8 @@ Game::~Game()
 {
     asset_Manager.unload_surface(screen);
     asset_Manager.unload_surface(start_s);
+    asset_Manager.unload_music(startscreen);
+    asset_Manager.unload_music(stagestart);
     asset_Manager.~assetManager();
     SDL_Quit();
 }
@@ -26,6 +30,7 @@ void Game::run()
 void Game::start()
 {
     fps_t.start();
+    asset_Manager.play_music(startscreen);
     while (at_start_s)
     {
         SDL_Event event;

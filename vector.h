@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+//ireto mis define kely ilaina,tsara afindra anaty defs.h ngamba?
 #define WIDTH 480
 #define HEIGHT 480
 #define PX 32
@@ -121,3 +122,5 @@ std::ostream& operator<<(std::ostream& flux, const Vector<T> vector)
     flux << '(' << vector.x << ", " << vector.y << ')';
     return flux;
 }*/
+
+//ito misy erreur ostreal tsy aiko manala azy dia nataoko comm aloha

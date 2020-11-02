@@ -5,15 +5,16 @@ Game::Game()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-    start_s = IMG_Load("./data/images/start_s.png");
+    start_s = asset_Manager.load_surface("./data/images/start_s.png");
     running = false;
     at_start_s = true;
 }
 
 Game::~Game()
 {
-    SDL_FreeSurface(screen);
-    SDL_FreeSurface(start_s);
+    asset_Manager.unload_surface(screen);
+    asset_Manager.unload_surface(start_s);
+    asset_Manager.~assetManager();
     SDL_Quit();
 }
 

@@ -1,5 +1,4 @@
-#ifndef TIMER_H
-#define TIMER_H
+#pragma once
 
 #include <SDL/SDL.h>
 
@@ -27,6 +26,3 @@ private:
 	int start_time, stop_time;
 	State state;
 };
-
-
-#endif

@@ -1,7 +1,13 @@
 #pragma once
 
 #include <cmath>
-#include "functions.h"
+
+#define WIDTH 480
+#define HEIGHT 480
+#define PX 32
+#define FPS 60
+
+using namespace std;
 
 template<typename T>
 struct Vector
@@ -109,9 +115,9 @@ Vector<T> operator/(const Vector<T>& v, const float scalar)
     return v*(1/scalar);
 }
 
-template<typename T>
+/*template<typename T>
 std::ostream& operator<<(std::ostream& flux, const Vector<T> vector)
 {
     flux << '(' << vector.x << ", " << vector.y << ')';
     return flux;
-}
+}*/

@@ -1,6 +1,7 @@
-#include <iostream>
+#include "game.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-	return 0;
+    Game().run();
+    return 0;
 }

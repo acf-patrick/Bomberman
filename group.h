@@ -12,9 +12,8 @@ public:
     Group() {}
     virtual ~Group();
 
-    /* met-à-jour tous les objets de ce groupe */
     void update();
-    /* déssine tous les objets de ce groupe */
+
     void draw(SDL_Surface*);
 
     void add(GameObject*);

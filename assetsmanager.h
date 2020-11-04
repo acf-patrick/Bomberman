@@ -6,19 +6,16 @@
 #include <SDL/SDL_mixer.h>
 #include <map>
 
-/* napiana géstion an'ny police koa */
 
 class AssetManager
 {
 private:
-	/* string no hiRepresentean ny ID dia iny ian koa ny key
-	amlay "map" dia lay ressource ny value */
+
 	std::map<std::string, SDL_Surface*> surfaces;
 	std::map<std::string, TTF_Font*> fonts;
     std::map<std::string, Mix_Chunk*> chunks;
     std::map<std::string, Mix_Music*> musics;
 
-    /* hiGenerena anlay ID raha toa ka ts manome param anreo method load */
     std::string getID(const char*);
 
 public:
@@ -38,7 +35,6 @@ public:
     void play_effect(Mix_Chunk *effect);
     void play_effect(std::string);
 
-    /* getters : saho misy ilàna anlay ressources rehefa any aoriana any */
     SDL_Surface* get_surface(std::string);
     TTF_Font* get_font(std::string);
     Mix_Music* get_music(std::string);

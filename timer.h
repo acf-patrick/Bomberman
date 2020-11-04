@@ -2,10 +2,6 @@
 
 #include <SDL/SDL.h>
 
-/* Novaiko variable ray ilay is_running sy is_stopped
-  dia ao amn'io enumeration io ny valeur azony raisina
-*/
-
 class Timer
 {
 public:

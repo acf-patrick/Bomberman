@@ -57,3 +57,37 @@ bool GameObject::collide(const SDL_Rect& rect) const
 	obj.setSize(rect.w, rect.h);
 	return collide(obj);
 }
+
+/* mety samy manana ny méthode "collide" ny o1 sy o2
+dia ts maints checkena daoly iz roa ... virtual mants iz ao
+ */
+bool mutual_collision(const GameObject& o1, const GameObject& o2)
+{ return o1.collide(o2) and o2.collide(o2); }
+
+bool GameObject::collide(Group *group, bool _kill) const
+{
+	bool ret(false);
+	std::vector<GameObject*> to_remove;
+    for (auto &object : group->objects)
+		if (mutual_collision(*object, *this))
+		{
+			ret = true;
+			if (_kill)
+				to_remove.push_back(object);
+		}
+
+	/* segfault manadala rah natao tanatin'lay boucle...
+	sad miIterer anlay container "objects" mants no manàla
+	item */
+	group->remove(to_remove);
+	return ret;
+}
+
+std::vector<GameObject*> GameObject::collide(const Group& group) const
+{
+    std::vector<GameObject*> ret;
+    for (auto &obj : group.objects)
+		if (mutual_collision(*obj, *this))
+			ret.push_back(obj);
+    return ret;
+}

@@ -1,4 +1,5 @@
 #include "group.h"
+#include "object.h"
 #include <algorithm>
 
 Group::~Group()
@@ -70,3 +71,4 @@ void Group::remove(GameObject *object)
     std::vector<Group*> &g(object->groups);
     g.erase(std::remove(std::begin(g), std::end(g), this), std::end(g));
 }
+

@@ -38,9 +38,26 @@ public:
 
 	void kill();
 
-	/* hidetectena collision */
+	/* ........................................... */
 	virtual bool collide(const GameObject&) const;
 	virtual bool collide(const SDL_Rect&) const;
+
+	/*
+	cas anty ohatra hoe nisy bomb nipoaka, dia nisy enemy
+	maromaro voa; rah destroy == true dia alàna tao amn'io
+	groupe io lay enemies.
+	miRetourne iz aveo hoe nis voa na tsia
+	*/
+	bool collide(Group*, bool _kill = false) const;
+
+    /*
+	otrotrn'io ambony io ihany fa au lieu hoe tng dia potehana
+	dia maazo liste anreo miEntrer en collision amty objet ity
+	dia hit eo zay atao...oatra hoe alaina alou ny position any,
+	inh oatra ny typenlay enemy...otrotrzany
+    */
+	std::vector<GameObject*> collide(const Group&) const;
+	/* ........................................... */
 
     /* mReturn anlay rect miEnglober anlay objet
 	sod mis ilàna azy any aoriana any

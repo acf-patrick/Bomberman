@@ -10,6 +10,11 @@ class GameObject
 {
 private:
 	Vector<float> position;
+
+    /* efa natao objet vector 'lay position, satria nilaina natao float,
+       dia aleo atao vector lay size fa ts SDL_Rect...lasa redondant lay position */
+	Vector<int> size;
+
 	std::vector<Group*> groups;
 
 public:
@@ -21,14 +26,26 @@ public:
 
 	void move(float, float);
 
-	Vector<float> getPosition();
+	Vector<float> getPosition() const;
 	void setPosition(float, float);
 
-	std::vector<Group*> getOwner();
+	Vector<int> getSize() const;
+	void setSize(int, int);
 
-	bool isAlive();
+	std::vector<Group*> getOwner() const;
+
+	bool isAlive() const;
 
 	void kill();
+
+	/* hidetectena collision */
+	virtual bool collide(const GameObject&) const;
+	virtual bool collide(const SDL_Rect&) const;
+
+    /* mReturn anlay rect miEnglober anlay objet
+	sod mis ilàna azy any aoriana any
+    */
+	SDL_Rect getBoundingBox() const;
 
 friend class Group;
 };

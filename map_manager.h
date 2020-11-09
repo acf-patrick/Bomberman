@@ -17,5 +17,5 @@ public:
 
     void generate_map();
 
-    void show_map(SDL_Surface *screen);
+    void draw(SDL_Surface *screen);
 };

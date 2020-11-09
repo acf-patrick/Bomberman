@@ -1,10 +1,11 @@
 #include "game.h"
 #include "defs.h"
+#include "renderer.h"
 
 Game::Game()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
-    screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    renderer.screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
     start_s = asset_Manager.load_surface("./data/images/title.png");
     stage_s = asset_Manager.load_surface("./data/images/misc.png");
@@ -62,20 +63,8 @@ void Game::play_stage()
 {
     fps_t.start();
 
-    SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
-    SDL_Rect blit_stage, pos_stage;
-    blit_stage.x = 0; blit_stage.y = 0;
-    blit_stage.w = 40; blit_stage.h = 8;
-    pos_stage.y = HEIGHT/2 - blit_stage.h/2;
-    pos_stage.x = WIDTH/2 - blit_stage.w/2;
-    SDL_BlitSurface(stage_s,&blit_stage,screen,&pos_stage);
-    blit_stage.y = 8; blit_stage.x = (current_stage - 1)*8;
-    blit_stage.w = 8;
-    pos_stage.x += 45;
-
+    stagePresentation();
     asset_Manager.play_music("stage start");
-    SDL_BlitSurface(stage_s, &blit_stage, screen, &pos_stage);
-    SDL_Flip(screen);
     SDL_Delay(3200);
 
     map_manager.generate_map();
@@ -87,4 +76,23 @@ void Game::play_stage()
         map_manager.show_map(screen);
         SDL_Flip(screen);
     }
+}
+
+void Game::stagePresentation()
+{
+    SDL_FillRect(screen, NULL, 0x0);
+
+    SDL_Rect blit_stage, pos_stage;
+    blit_stage.x = 0; blit_stage.y = 0;
+    blit_stage.w = 40; blit_stage.h = 8;
+    pos_stage.y = HEIGHT/2 - blit_stage.h/2;
+    pos_stage.x = WIDTH/2 - blit_stage.w/2;
+    SDL_BlitSurface(stage_s,&blit_stage,screen,&pos_stage);
+
+    blit_stage.x = (current_stage - 1)*8;
+    blit_stage.y = 8;
+    blit_stage.w = 8;
+    pos_stage.x += 45;
+    SDL_BlitSurface(stage_s, &blit_stage, screen, &pos_stage);
+    SDL_Flip(screen);
 }

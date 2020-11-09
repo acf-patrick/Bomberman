@@ -40,7 +40,7 @@ void Map_Manager::generate_map()
     }
 }
 
-void Map_Manager::show_map(SDL_Surface *screen)
+void Map_Manager::draw(SDL_Surface *screen)
 {
 	for (int i=0; i<13;i++)
 	{

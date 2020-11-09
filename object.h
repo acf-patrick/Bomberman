@@ -22,7 +22,7 @@ public:
 	virtual ~GameObject() {}
 
 	virtual void update();
-	virtual void draw(SDL_Surface*);
+	virtual void draw();
 
 	void move(float, float);
 

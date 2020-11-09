@@ -9,5 +9,3 @@ struct Renderer
 	static Camera* camera;
 };
 
-SDL_Surface* Renderer::screen = nullptr;
-Camera* Renderer::camera = nullptr;

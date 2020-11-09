@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL/SDL.h>
 #include "vector.h"
 
 class GameObject;
@@ -9,9 +10,7 @@ class Camera
 private:
 	/* lay objet arahana */
 	GameObject *focus;
-	Vector<int> position;
-	Vector<int> limit;
-	Vector<int> size;
+	Vector<int> position, size, limit;
 
 public:
 	Camera(GameObject*);

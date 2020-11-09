@@ -19,10 +19,10 @@ void Group::update()
 		object->update();
 }
 
-void Group::draw(SDL_Surface* screen)
+void Group::draw()
 {
 	for (auto &object : objects)
-		object->draw(screen);
+		object->draw();
 }
 
 void Group::add(GameObject *object)

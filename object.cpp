@@ -4,7 +4,7 @@
 void GameObject::update()
 {}
 
-void GameObject::draw(SDL_Surface* screen)
+void GameObject::draw()
 {}
 
 void GameObject::move(float x, float y)

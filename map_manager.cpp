@@ -2,7 +2,7 @@
 #include "assetsmanager.h"
 #include <ctime>
 
-Map_Manager::Map_Manager()
+MapManager::MapManager()
 {
     srand(time(0));
 
@@ -13,10 +13,10 @@ Map_Manager::Map_Manager()
     brick_count = 30;
 }
 
-Map_Manager::~Map_Manager()
+MapManager::~MapManager()
 {}
 
-void Map_Manager::generate_map()
+void MapManager::generate_map()
 {
     for (int i=0; i<13; i++)
     {
@@ -40,7 +40,7 @@ void Map_Manager::generate_map()
     }
 }
 
-void Map_Manager::draw(SDL_Surface *screen)
+void MapManager::draw(SDL_Surface *screen)
 {
 	for (int i=0; i<13;i++)
 	{

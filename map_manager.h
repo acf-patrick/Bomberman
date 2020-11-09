@@ -3,7 +3,7 @@
 #include "vector.h"
 #include <SDL/SDL.h>
 
-class Map_Manager
+class MapManager
 {
 private:
    enum { WALL,GROUND,BRICK } ;
@@ -12,8 +12,8 @@ private:
    int map[13][30], brick_count;
 
 public:
-    Map_Manager();
-    ~Map_Manager();
+    MapManager();
+    ~MapManager();
 
     void generate_map();
 

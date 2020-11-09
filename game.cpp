@@ -1,11 +1,12 @@
 #include "game.h"
 #include "defs.h"
-#include "renderer.h"
+#include "camera.h"
 
 Game::Game()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     renderer.screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    renderer.camera = new Camera(&player);
 
     start_s = asset_Manager.load_surface("./data/images/title.png");
     stage_s = asset_Manager.load_surface("./data/images/misc.png");
@@ -53,8 +54,8 @@ void Game::start()
         if (event.type == SDL_KEYDOWN)
             break;
         regulate_FPS();
-        SDL_BlitSurface(start_s, NULL, screen, &pos);
-        SDL_Flip(screen);
+        SDL_BlitSurface(start_s, NULL, renderer.screen, &pos);
+        SDL_Flip(renderer.screen);
     }
     fps_t.stop();
 }
@@ -73,26 +74,26 @@ void Game::play_stage()
     while (true)
     {
         regulate_FPS();
-        map_manager.show_map(screen);
-        SDL_Flip(screen);
+        map_manager.draw(renderer.screen);
+        SDL_Flip(renderer.screen);
     }
 }
 
 void Game::stagePresentation()
 {
-    SDL_FillRect(screen, NULL, 0x0);
+    SDL_FillRect(renderer.screen, NULL, 0x0);
 
     SDL_Rect blit_stage, pos_stage;
     blit_stage.x = 0; blit_stage.y = 0;
     blit_stage.w = 40; blit_stage.h = 8;
     pos_stage.y = HEIGHT/2 - blit_stage.h/2;
     pos_stage.x = WIDTH/2 - blit_stage.w/2;
-    SDL_BlitSurface(stage_s,&blit_stage,screen,&pos_stage);
+    SDL_BlitSurface(stage_s, &blit_stage, renderer.screen, &pos_stage);
 
     blit_stage.x = (current_stage - 1)*8;
     blit_stage.y = 8;
     blit_stage.w = 8;
     pos_stage.x += 45;
-    SDL_BlitSurface(stage_s, &blit_stage, screen, &pos_stage);
-    SDL_Flip(screen);
+    SDL_BlitSurface(stage_s, &blit_stage, renderer.screen, &pos_stage);
+    SDL_Flip(renderer.screen);
 }

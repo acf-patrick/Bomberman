@@ -5,6 +5,7 @@
 #include "timer.h"
 #include "vector.h"
 #include "assetsmanager.h"
+#include "map_manager.h"
 
 class Game
 {
@@ -14,6 +15,7 @@ private:
 	int current_stage; //stage misy amzao
 	Timer fps_t;
 	AssetManager asset_Manager;
+	Map_Manager map_manager;
 
 	void start();
 	void play_stage();

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "object.h"
+#include <SDL/SDL.h>
+
+class GameObject;
 
 class Group
 {
@@ -19,6 +21,12 @@ public:
     void add(GameObject*);
 
     void remove(GameObject*);
+    /* amzay tsika afak manao hoe :
+		enemies.remove({ truc, bidule, chose });
+     */
+    void remove(const std::vector<GameObject*>&);
 
     bool has(GameObject*);
+
+friend class GameObject;
 };

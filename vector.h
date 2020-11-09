@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include <cmath>
 
 template<typename T>
@@ -11,7 +12,7 @@ struct Vector
 	Vector() { x = y = 0; }
     Vector(T px, T py) { setCartesian(px, py); }
 
-    void setCartesian(float px, float py)
+    void setCartesian(T px, T py)
     {
         x = px;
         y = py;

@@ -11,6 +11,7 @@ Game::Game()
 
     asset_Manager.load_music("./data/sounds/titlescreen.mp3", "start screen");
     asset_Manager.load_music("./data/sounds/stagestart.mp3", "stage start");
+    asset_Manager.load_music("./data/sounds/stageplay.mp3", "stage play");
 
     running = false;
     at_start_s = true;
@@ -69,16 +70,19 @@ void Game::play_stage()
     pos_stage.y = HEIGHT/2 - blit_stage.h/2;
     pos_stage.x = WIDTH/2 - blit_stage.w/2;
     SDL_BlitSurface(stage_s,&blit_stage,screen,&pos_stage);
-    blit_stage.y = 8; blit_stage.x = (current_stage - 1)*8; //rehefa miova ny curr_stage dia mihisaka ilay nombre blitena
+    blit_stage.y = 8; blit_stage.x = (current_stage - 1)*8;
     blit_stage.w = 8;
     pos_stage.x += 45; //mihisaka kely hinlitena nale nombre
+    asset_Manager.play_music("stage start", -1);
     SDL_BlitSurface(stage_s,&blit_stage,screen,&pos_stage);
     SDL_Flip(screen);
-    asset_Manager.play_music("stage start", 1);
+    SDL_Delay(3200);
+    map_manager.generate_map(); //mgenere anle map aloha
+    asset_Manager.play_music("stage play", -1); //mplay anle song fa tsya aiko hoe maninona no -1 vao mety
     while (m_running)
     {
-        //asina anle zavtra mitanga in game amzay
-        //ohatran mplante le screen vao kitihana tsy aiko hoe maninona na dia efa regule ary ny fpss
+        map_manager.show_map(screen);
+        SDL_Flip(screen);
         regulate_FPS();
     }
 }

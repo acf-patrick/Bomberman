@@ -29,8 +29,8 @@ public:
     Mix_Music *load_music(const char *file, std::string ID = "");
     Mix_Chunk *load_effect(const char *file, std::string ID = "");
 
-    void play_music(Mix_Music *music, int value = 0);
-    void play_music(std::string, int value = 0);
+    void play_music(Mix_Music *music, int value = -1);
+    void play_music(std::string, int value = -1);
 
     void play_effect(Mix_Chunk *effect);
     void play_effect(std::string);

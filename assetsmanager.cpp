@@ -113,8 +113,6 @@ Mix_Chunk* AssetManager::get_chunk(std::string ID)
 TTF_Font* AssetManager::get_font(std::string ID)
 {return fonts[ID]; }
 
-/* anaran'lay fichier ian fa nalàna ftsn ny éxtension
-  tsika ve moa haka alavitra */
 std::string AssetManager::getID(const char *file_name)
 {
     std::string file(file_name);

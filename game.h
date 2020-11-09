@@ -10,9 +10,9 @@
 class Game
 {
 private:
-	SDL_Surface *screen, *start_s, *stage_s; //napina surface iray mampiseho ilay numero anle stage
+	SDL_Surface *screen, *start_s, *stage_s;
 	bool running, at_start_s;
-	int current_stage; //stage misy amzao
+	int current_stage;
 	Timer fps_t;
 	AssetManager asset_Manager;
 	Map_Manager map_manager;

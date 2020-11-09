@@ -14,7 +14,6 @@ Game::Game()
     asset_Manager.load_music("./data/sounds/stageplay.mp3", "stage play");
 
     running = false;
-    at_start_s = true;
 
     current_stage = 1;
 }
@@ -31,6 +30,13 @@ void Game::run()
     play_stage();
 }
 
+void Game::regulate_FPS()
+{
+    int t = fps_t.get_elapsed_time();
+    if (t < 1000/FPS)
+        SDL_Delay(1000/FPS - t);
+}
+
 void Game::start()
 {
     SDL_Rect pos;
@@ -39,30 +45,23 @@ void Game::start()
 
     fps_t.start();
     asset_Manager.play_music("start screen", -1);
-    while (at_start_s)
+    while (true)
     {
         SDL_Event event;
-        SDL_BlitSurface(start_s, NULL, screen, &pos);
-        SDL_Flip(screen);
         SDL_PollEvent(&event);
         if (event.type == SDL_KEYDOWN)
-            at_start_s = false;
+            break;
         regulate_FPS();
+        SDL_BlitSurface(start_s, NULL, screen, &pos);
+        SDL_Flip(screen);
     }
     fps_t.stop();
-}
-
-void Game::regulate_FPS()
-{
-    int t = fps_t.get_elapsed_time();
-    if (t < 1000/FPS)
-        SDL_Delay(1000/FPS - t);
 }
 
 void Game::play_stage()
 {
     fps_t.start();
-    bool m_running = true;
+
     SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
     SDL_Rect blit_stage, pos_stage;
     blit_stage.x = 0; blit_stage.y = 0;
@@ -72,17 +71,20 @@ void Game::play_stage()
     SDL_BlitSurface(stage_s,&blit_stage,screen,&pos_stage);
     blit_stage.y = 8; blit_stage.x = (current_stage - 1)*8;
     blit_stage.w = 8;
-    pos_stage.x += 45; //mihisaka kely hinlitena nale nombre
-    asset_Manager.play_music("stage start", -1);
-    SDL_BlitSurface(stage_s,&blit_stage,screen,&pos_stage);
+    pos_stage.x += 45;
+
+    asset_Manager.play_music("stage start");
+    SDL_BlitSurface(stage_s, &blit_stage, screen, &pos_stage);
     SDL_Flip(screen);
     SDL_Delay(3200);
-    map_manager.generate_map(); //mgenere anle map aloha
-    asset_Manager.play_music("stage play", -1); //mplay anle song fa tsya aiko hoe maninona no -1 vao mety
-    while (m_running)
+
+    map_manager.generate_map();
+    asset_Manager.play_music("stage play");
+
+    while (true)
     {
+        regulate_FPS();
         map_manager.show_map(screen);
         SDL_Flip(screen);
-        regulate_FPS();
     }
 }

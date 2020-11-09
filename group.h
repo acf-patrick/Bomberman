@@ -16,7 +16,7 @@ public:
 
     void update();
 
-    void draw(SDL_Surface*);
+    void draw();
 
     void add(GameObject*);
 

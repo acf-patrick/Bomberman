@@ -1,5 +1,7 @@
 #include "map_manager.h"
 #include "assetsmanager.h"
+#include "renderer.h"
+#include "vector.h"
 #include <ctime>
 
 MapManager::MapManager()
@@ -18,18 +20,18 @@ MapManager::~MapManager()
 
 void MapManager::generate_map()
 {
-    for (int i=0; i<13; i++)
+    for (int i = 0; i < MAP_H; i++)
     {
-        for (int j=0; j<30; j++)
+        for (int j = 0; j < MAP_W; j++)
         {
-            if ((i %2 == 0 && j %2 == 0) || i == 0 || i == 12 || j == 0 || j == 29)
+            if ((i %2 == 0 and j %2 == 0) or i == 0 or i == 12 or j == 0 or j == 29)
                 map[i][j] = WALL;
             else map[i][j] = GROUND;
         }
     }
-	for (int i=0;  i<brick_count; ++i)
+	for (int i = 0;  i < brick_count; ++i)
     {
-        int a,b;
+        int a, b;
         do
         {
             a = rand()%13;
@@ -40,20 +42,43 @@ void MapManager::generate_map()
     }
 }
 
-void MapManager::draw(SDL_Surface *screen)
+void MapManager::draw()
 {
-	for (int i=0; i<13;i++)
+	/* izay hita iany no affichena */
+	SDL_Rect viewport(Renderer::camera->getViewport());
+    int xmin = viewport.y / PX, xmax = (viewport.y+viewport.h) / PX;
+	int ymin = viewport.x / PX, ymax = (viewport.x+viewport.w) / PX;
+
+	/* ndrao loza */
+	if (xmin < 0)
+		xmin = 0;
+	if (ymin < 0)
+		ymin = 0;
+	if (xmax >= MAP_H)
+		xmax = MAP_H-1;
+	if (ymax >= MAP_W)
+		ymax = MAP_W-1;
+
+	for (int i = xmin; i <= xmax; i++)
 	{
-		for (int j=0; j<30; j++)
+		for (int j = ymin; j <= ymax; j++)
 		{
-			pos.x = j * 32;
-			pos.y = i * 32;
-        	if (map[i][j] == GROUND)
-            	SDL_BlitSurface(ground,NULL,screen,&pos);
-        	else if (map[i][j] == WALL)
-            	SDL_BlitSurface(wall,NULL,screen,&pos);
-            else if (map[i][j] == BRICK)
-            	SDL_BlitSurface(brick,NULL,screen,&pos);
+			Vector<int> dest(Renderer::camera->convert(j*PX, i*PX));
+			pos.x = dest.x;
+			pos.y = dest.y;
+			switch (map[i][j])
+			{
+			case GROUND:
+            	SDL_BlitSurface(ground, NULL, Renderer::screen, &pos);
+            	break;
+			case WALL:
+            	SDL_BlitSurface(wall, NULL, Renderer::screen, &pos);
+				break;
+			case BRICK:
+            	SDL_BlitSurface(brick, NULL, Renderer::screen, &pos);
+            	break;
+			default : ;
+			}
 		}
 	}
 }

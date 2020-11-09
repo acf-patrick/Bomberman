@@ -7,7 +7,7 @@ void GameObject::update()
 void GameObject::draw()
 {}
 
-void GameObject::move(float x, float y)
+void GameObject::move(int x, int y)
 {
 	Vector<float> offset(x, y);
 	position += offset;

@@ -22,11 +22,17 @@ void Camera::update()
 		position.x = 0;
     if (position.y < 0)
 		position.y = 0;
-	if (position.x > limit.x)
-        position.x = limit.x;
-	if (position.y > limit.y)
-        position.y = limit.y;
+	if (position.x > limit.x - size.x)
+        position.x = limit.x - size.x;
+	if (position.y > limit.y - size.y)
+        position.y = limit.y - size.y;
 }
 
-void Camera::setLimit(const Vector<int>& l)
-{ limit.setCartesian(l.x, l.y); }
+void Camera::setLimit(int x, int y)
+{ limit.setCartesian(x, y); }
+
+Vector<int> Camera::convert(int x, int y)
+{ return Vector<int>(x-position.x, y-position.y); }
+
+SDL_Rect Camera::getViewport()
+{ return SDL_Rect { Sint16(position.x), Sint16(position.y), Uint16(size.x), Uint16(size.y) }; }

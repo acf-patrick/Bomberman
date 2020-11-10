@@ -10,7 +10,6 @@ class MapManager
 private:
    enum { WALL,GROUND,BRICK } ;
    SDL_Surface *wall,*ground,*brick;
-   SDL_Rect pos;
    int map[MAP_H][MAP_W];
    int brick_count;
 

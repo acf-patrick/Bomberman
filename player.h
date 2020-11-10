@@ -20,8 +20,8 @@ private:
     void updateFrame();
 
 public:
-	Player(MapManager*);
+	Player(MapManager*, int, int);
 
-	void update();
-	void draw(SDL_Surface*);
+	void update() override final;
+	void draw() override final;
 };

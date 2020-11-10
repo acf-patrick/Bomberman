@@ -24,7 +24,7 @@ public:
 	virtual void update();
 	virtual void draw();
 
-	void move(int, int);
+	virtual void move(int, int);
 
 	Vector<float> getPosition() const;
 	void setPosition(float, float);

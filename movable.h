@@ -18,5 +18,5 @@ private:
 
 public:
 	Movable(MapManager*);
-	void move(int, int);
+	void move(int, int) override;
 };

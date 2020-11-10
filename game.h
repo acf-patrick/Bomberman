@@ -16,8 +16,6 @@ private:
 	MapManager map_manager;
 
 	Player *player;
-	/* itestena anlay scroll */
-	GameObject fakePlayer;
 
 	Timer fps_t;
 
@@ -26,8 +24,6 @@ private:
 
 	SDL_Event event;
 
-	/* ialana amlay SDL_EnableKeyRepeat */
-	std::array<bool, SDLK_LAST> keys;
 	bool running, at_start_s;
 	int current_stage;
 
@@ -41,6 +37,9 @@ private:
 	void updateKeys();
 
 public:
+	/* ialana amlay SDL_EnableKeyRepeat */
+	static std::array<bool, SDLK_LAST> keys;
+
 	Game();
 	~Game();
 

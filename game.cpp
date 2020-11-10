@@ -4,6 +4,8 @@
 #include "renderer.h"
 #include <map>
 
+std::array<bool, SDLK_LAST> Game::keys;
+
 Game::Game()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -11,8 +13,10 @@ Game::Game()
 
     Renderer::screen = screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
+    player = new Player(&map_manager, PX+1, PX+1);
+
     /* manarabody anlay perso lay camera */
-    Camera *c = new Camera(&fakePlayer);
+    Camera *c = new Camera(player);
     c->init({0, 0, WIDTH, HEIGHT});
     c->setLimit(MAP_W*PX, MAP_H*PX);
     Renderer::camera = c;
@@ -84,17 +88,12 @@ void Game::play_stage()
     while (true)
     {
         updateKeys();
-        if (keys[SDLK_UP])
-            fakePlayer.move(0, -1);
-        if (keys[SDLK_DOWN])
-            fakePlayer.move(0, 1);
-        if (keys[SDLK_LEFT])
-            fakePlayer.move(-1, 0);
-        if (keys[SDLK_RIGHT])
-            fakePlayer.move(1, 0);
         regulate_FPS();
+        /* mise-à-jour de player */
+        player->update();
         Renderer::camera->update();
         map_manager.draw();
+        player->draw();
         SDL_Flip(screen);
     }
 }

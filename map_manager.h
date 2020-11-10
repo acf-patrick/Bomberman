@@ -2,6 +2,7 @@
 
 #include "vector.h"
 #include "defs.h"
+#include "object.h"
 #include <SDL/SDL.h>
 
 class MapManager
@@ -18,6 +19,8 @@ public:
     ~MapManager();
 
     void generate_map();
+
+    bool checkCollision(GameObject*);
 
     void draw();
 };

@@ -8,7 +8,7 @@ class Group;
 
 class GameObject
 {
-private:
+protected:
 	Vector<float> position;
 
     /* efa natao objet vector 'lay position, satria nilaina natao float,

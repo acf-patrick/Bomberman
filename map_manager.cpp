@@ -82,3 +82,8 @@ void MapManager::draw()
 		}
 	}
 }
+
+bool MapManager::checkCollision(GameObject *object)
+{
+	return false;
+}

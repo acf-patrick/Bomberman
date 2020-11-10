@@ -15,7 +15,7 @@ private:
 	AssetManager asset_Manager;
 	MapManager map_manager;
 
-	Player player;
+	Player *player;
 	/* itestena anlay scroll */
 	GameObject fakePlayer;
 

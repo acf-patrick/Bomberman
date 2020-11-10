@@ -32,13 +32,15 @@ struct Vector
 
     Vector<T> operator-() { return Vector<T> (-x, -y); }
 
-    void operator+=(const Vector<T>& v)
+    template<typename _T>
+    void operator+=(const Vector<_T>& v)
     {
         x += v.x;
         y += v.y;
     }
 
-    void operator-=(const Vector<T>& v)
+    template<typename _T>
+    void operator-=(const Vector<_T>& v)
     {
         x -= v.x;
         y -= v.y;

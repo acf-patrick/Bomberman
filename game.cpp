@@ -13,7 +13,7 @@ Game::Game()
 
     /* manarabody anlay perso lay camera */
     Camera *c = new Camera(&fakePlayer);
-    c->init(SDL_Rect{0, 0, WIDTH, HEIGHT});
+    c->init({0, 0, WIDTH, HEIGHT});
     c->setLimit(MAP_W*PX, MAP_H*PX);
     Renderer::camera = c;
 
@@ -31,6 +31,8 @@ Game::Game()
 
 Game::~Game()
 {
+    delete player;
+    player = nullptr;
     asset_Manager.~AssetManager();
     SDL_Quit();
 }

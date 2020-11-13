@@ -7,5 +7,7 @@ struct Renderer
 {
 	static SDL_Surface* screen;
 	static Camera* camera;
+
+	static void destroy();
 };
 

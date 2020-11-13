@@ -9,7 +9,8 @@ Game::Game()
     SDL_Init(SDL_INIT_EVERYTHING);
     keys.fill(false);
 
-    Renderer::screen = screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    screen = SDL_SetVideoMode(1080, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    Renderer::screen = SDL_CreateRGBSurface(SDL_HWSURFACE, WIDTH, HEIGHT, 32, 0, 0, 0, 0);
 
     player = new Player(&map_manager, PX+1, PX+1);
 
@@ -36,6 +37,7 @@ Game::~Game()
     delete player;
     player = nullptr;
     asset_Manager.~AssetManager();
+    Renderer::destroy();
     SDL_Quit();
 }
 
@@ -67,8 +69,9 @@ void Game::start()
         if (event.type == SDL_KEYDOWN)
             break;
         regulate_FPS();
-        SDL_BlitSurface(start_s, NULL, screen, &pos);
-        SDL_Flip(screen);
+        SDL_BlitSurface(start_s, NULL, Renderer::screen, &pos);
+        SDL_Flip(Renderer::screen);
+        drawScene();
     }
     fps_t.stop();
 }
@@ -87,10 +90,8 @@ void Game::play_stage()
     {
         updateKeys();
 
-        if (keys[SDLK_ESCAPE])
+        if (event.type == SDL_QUIT)
             break;
-        if (keys[SDLK_SPACE])
-            map_manager.generate_map();
         if (keys[SDLK_UP])
             player->move(0, -1);
         if (keys[SDLK_DOWN])
@@ -106,7 +107,8 @@ void Game::play_stage()
 
         map_manager.draw();
         player->draw();
-        SDL_Flip(screen);
+        SDL_Flip(Renderer::screen);
+        drawScene();
     }
 }
 
@@ -119,22 +121,19 @@ void Game::stagePresentation()
     blit_stage.w = 40; blit_stage.h = 8;
     pos_stage.y = HEIGHT/2 - blit_stage.h/2;
     pos_stage.x = WIDTH/2 - blit_stage.w/2;
-    SDL_BlitSurface(stage_s, &blit_stage, screen, &pos_stage);
+    SDL_BlitSurface(stage_s, &blit_stage, Renderer::screen, &pos_stage);
 
     blit_stage.x = (current_stage - 1)*8;
     blit_stage.y = 8;
     blit_stage.w = 8;
     pos_stage.x += 45;
-    SDL_BlitSurface(stage_s, &blit_stage, screen, &pos_stage);
-    SDL_Flip(screen);
+    SDL_BlitSurface(stage_s, &blit_stage, Renderer::screen, &pos_stage);
+    SDL_Flip(Renderer::screen);
+    drawScene();
 }
 
 void Game::updateKeys()
 {
-    /* raha tsy atao boucle ty dia lasa zay event */
-    /* volou ao amlay list d'evenement ian no voatest */
-    /* raha sad nanetsika souris zan no nipotsitra touche */
-    /* dia mety ts ho voaray lay event, nanindry touche */
     while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_KEYDOWN)
@@ -142,4 +141,16 @@ void Game::updateKeys()
         if (event.type == SDL_KEYUP)
             keys[event.key.keysym.sym] = false;
     }
+}
+
+void Game::drawScene()
+{
+    SDL_FillRect(screen, NULL, 0x0);
+    SDL_Rect pos = {
+        Sint16(0.5*(screen->w-Renderer::screen->w)),
+        Sint16(0.5*(screen->h-Renderer::screen->h)),
+        0, 0
+    };
+    SDL_BlitSurface(Renderer::screen, NULL, screen, &pos);
+    SDL_Flip(screen);
 }

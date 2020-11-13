@@ -38,6 +38,8 @@ private:
 
 	void updateKeys();
 
+	void drawScene();
+
 public:
 
 	Game();

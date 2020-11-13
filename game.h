@@ -27,6 +27,8 @@ private:
 	bool running, at_start_s;
 	int current_stage;
 
+	std::array<bool, SDLK_LAST> keys;
+
 	/* lay mapseho anlay hoe stage firy 'sika zao */
 	void stagePresentation();
 
@@ -37,8 +39,6 @@ private:
 	void updateKeys();
 
 public:
-	/* ialana amlay SDL_EnableKeyRepeat */
-	static std::array<bool, SDLK_LAST> keys;
 
 	Game();
 	~Game();

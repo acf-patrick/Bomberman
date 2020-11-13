@@ -11,16 +11,7 @@ Player::Player(MapManager *m, int x, int y) :
 }
 
 void Player::update()
-{
-    if (Game::keys[SDLK_UP])
-		move(0, -1);
-	if (Game::keys[SDLK_DOWN])
-		move(0,  1);
-	if (Game::keys[SDLK_LEFT])
-		move(-1, 0);
-	if (Game::keys[SDLK_RIGHT])
-		move( 1, 0);
-}
+{}
 
 /* niandry anlay sprites */
 void Player::draw()

@@ -9,7 +9,6 @@
 class Player : public Movable
 {
 private:
-	Vector<float> velocity;
 
 	SDL_Surface *spritesheet;
 	/* amlay animation */

@@ -4,8 +4,6 @@
 #include "renderer.h"
 #include <map>
 
-std::array<bool, SDLK_LAST> Game::keys;
-
 Game::Game()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -24,9 +22,9 @@ Game::Game()
     start_s = asset_Manager.load_surface("./data/images/title.png");
     stage_s = asset_Manager.load_surface("./data/images/misc.png");
 
-    asset_Manager.load_music("./data/sounds/titlescreen.mp3", "start screen");
-    asset_Manager.load_music("./data/sounds/stagestart.mp3", "stage start");
-    asset_Manager.load_music("./data/sounds/stageplay.mp3", "stage play");
+    asset_Manager.load_music("./data/sounds/music/titlescreen.mp3", "start screen");
+    asset_Manager.load_music("./data/sounds/music/stagestart.mp3", "stage start");
+    asset_Manager.load_music("./data/sounds/music/stageplay.mp3", "stage play");
 
     running = false;
 
@@ -44,6 +42,7 @@ Game::~Game()
 void Game::run()
 {
     start();
+    stagePresentation();
     play_stage();
 }
 
@@ -78,7 +77,6 @@ void Game::play_stage()
 {
     fps_t.start();
 
-    stagePresentation();
     asset_Manager.play_music("stage start");
     SDL_Delay(3200);
 
@@ -88,10 +86,24 @@ void Game::play_stage()
     while (true)
     {
         updateKeys();
-        regulate_FPS();
-        /* mise-à-jour de player */
+
+        if (keys[SDLK_ESCAPE])
+            break;
+        if (keys[SDLK_SPACE])
+            map_manager.generate_map();
+        if (keys[SDLK_UP])
+            player->move(0, -1);
+        if (keys[SDLK_DOWN])
+            player->move(0,  1);
+        if (keys[SDLK_LEFT])
+            player->move(-1, 0);
+        if (keys[SDLK_RIGHT])
+            player->move( 1, 0);
+
         player->update();
         Renderer::camera->update();
+        regulate_FPS();
+
         map_manager.draw();
         player->draw();
         SDL_Flip(screen);

@@ -7,7 +7,7 @@ Player::Player(MapManager *m, int x, int y) :
 	Movable(m), dying(false)
 {
 	position.setCartesian(x, y);
-	size.setCartesian(31, 31);
+	size.setCartesian(30, 30);
 }
 
 void Player::update()

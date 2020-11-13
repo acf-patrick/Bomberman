@@ -79,7 +79,8 @@ struct Vector
 
     void rotate(float theta)
     {
-        Vector<T> tmp(magnitude(), theta+angle());
+        Vector<T> tmp;
+        tmp.setPolar(magnitude(), theta+angle());
         set(tmp.x, tmp.y);
     }
 };

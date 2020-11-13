@@ -87,8 +87,8 @@ bool MapManager::checkCollision(GameObject *object)
 {
 	SDL_Rect pos(object->getBoundingBox());
 	/* checkena ny tiles manodidina anlay objet */
-    int xmin = pos.y / PX, xmax = (pos.y+pos.h) / PX;
-    int ymin = pos.x / PX, ymax = (pos.x+pos.w) / PX;
+    int xmin = pos.y / PX, xmax = (pos.y+pos.h-1) / PX;
+    int ymin = pos.x / PX, ymax = (pos.x+pos.w-1) / PX;
 
 	if ((xmin < 0 or ymin < 0) or (xmax >= MAP_H or ymax >= MAP_W))
 		return true;

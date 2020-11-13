@@ -30,6 +30,8 @@ Game::Game()
     running = false;
 
     current_stage = 1;
+
+    asset_Manager.load_surface("./data/images/buttons/dir.png");
 }
 
 Game::~Game()
@@ -114,7 +116,7 @@ void Game::play_stage()
 
 void Game::stagePresentation()
 {
-    SDL_FillRect(screen, NULL, 0x0);
+    SDL_FillRect(Renderer::screen, NULL, 0x0);
 
     SDL_Rect blit_stage, pos_stage;
     blit_stage.x = 0; blit_stage.y = 0;
@@ -152,5 +154,9 @@ void Game::drawScene()
         0, 0
     };
     SDL_BlitSurface(Renderer::screen, NULL, screen, &pos);
+    SDL_Surface *dir = asset_Manager.get_surface("dir");
+    pos.x = 15;
+    pos.y = Sint16(HEIGHT - (dir->h+15));
+    SDL_BlitSurface(dir, NULL, screen, &pos);
     SDL_Flip(screen);
 }

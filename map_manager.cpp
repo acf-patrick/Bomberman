@@ -9,9 +9,9 @@ MapManager::MapManager()
     srand(time(0));
 
     AssetManager &asset_manager = *AssetManager::instance;
-	wall = asset_manager.load_surface("./data/images/wall.png", "wall");
-	ground = asset_manager.load_surface("./data/images/ground.png", "ground");
-    brick = asset_manager.load_surface("./data/images/brick.png", "brick");
+	wall = asset_manager.load_surface("./data/images/wall.png");
+	ground = asset_manager.load_surface("./data/images/ground.png");
+    brick = asset_manager.load_surface("./data/images/brick.png");
     brick_count = 30;
 }
 

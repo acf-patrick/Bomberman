@@ -10,7 +10,7 @@ std::array<bool, SDLK_LAST> Game::keys;
 
 Game::Game()
 {
-    #ifdef __ANDROID__
+    #ifndef __ANDROID__
         addJoystick = true;
     #else
         addJoystick = false;
@@ -106,14 +106,6 @@ void Game::play_stage()
 
         if (event.type == SDL_QUIT)
             break;
-        if (keys[SDLK_UP])
-            player->move(0, -1);
-        if (keys[SDLK_DOWN])
-            player->move(0,  1);
-        if (keys[SDLK_LEFT])
-            player->move(-1, 0);
-        if (keys[SDLK_RIGHT])
-            player->move( 1, 0);
 
         player->update();
         Renderer::camera->update();
@@ -122,6 +114,7 @@ void Game::play_stage()
         map_manager.draw();
         player->draw();
         SDL_Flip(Renderer::screen);
+
         SDL_FillRect(screen, NULL, 0x0);
         if (addJoystick)
             controller->draw(screen);

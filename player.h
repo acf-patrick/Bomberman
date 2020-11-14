@@ -13,11 +13,11 @@ private:
     enum { UP, DOWN, LEFT, RIGHT };
 
 	int direction;
+	int cur_frame;
 
 	SDL_Surface *spritesheet;
     Timer timer, bomb_drop;
 	bool dying, dropped_bomb;
-	SDL_Rect blit_pos;
 
     void updateFrame();
 

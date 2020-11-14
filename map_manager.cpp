@@ -37,19 +37,17 @@ void MapManager::generate_map()
             a = rand()%13;
             b = rand()%30;
         }
-        while (map[a][b] != GROUND or (a==1 and b==2) or (a==2 and b==1));
+        while (map[a][b] != GROUND or (a==1 and b==2) or (a==2 and b==1) or (a==1 and b==1));
         map[a][b] = BRICK;
     }
 }
 
 void MapManager::draw()
 {
-	/* izay hita iany no affichena */
 	SDL_Rect viewport(Renderer::camera->getViewport()), pos;
     int xmin = viewport.y / PX, xmax = (viewport.y+viewport.h) / PX;
 	int ymin = viewport.x / PX, ymax = (viewport.x+viewport.w) / PX;
 
-	/* ndrao loza */
 	if (xmin < 0)
 		xmin = 0;
 	if (ymin < 0)
@@ -86,7 +84,7 @@ void MapManager::draw()
 bool MapManager::checkCollision(GameObject *object)
 {
 	SDL_Rect pos(object->getBoundingBox());
-	/* checkena ny tiles manodidina anlay objet */
+
     int xmin = pos.y / PX, xmax = (pos.y+pos.h-1) / PX;
     int ymin = pos.x / PX, ymax = (pos.x+pos.w-1) / PX;
 

@@ -9,8 +9,7 @@ class Movable : public GameObject
 private:
 	MapManager *map;
 
-	bool tryMove(float, float);
-	void affineMove(float, float);
+	void tryMove(float, float);
 
 public:
 	Movable(MapManager*);

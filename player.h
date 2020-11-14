@@ -10,12 +10,12 @@
 class Player : public Movable
 {
 private:
-    enum {UP,DOWN,LEFT,RIGHT};
-	Vector<float> velocity;
+    enum { UP, DOWN, LEFT, RIGHT };
 
-	int direction; //direction itodihanle perso
+	int direction;
+
 	SDL_Surface *spritesheet;
-    Timer timer, bomb_drop; //bomb_drop timer ho anle miandry vao afaka mandefa bombe hafa
+    Timer timer, bomb_drop;
 	bool dying, dropped_bomb;
 	SDL_Rect blit_pos;
 

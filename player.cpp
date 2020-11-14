@@ -8,15 +8,15 @@ Player::Player(MapManager *m, int x, int y) :
 {
     position.setCartesian(x, y);
     size.setCartesian(16, 24);
-    spritesheet = IMG_Load("./data/images/spritesheet.png");
+    spritesheet = AssetManager::instance->load_surface("./data/images/spritesheet.png");
     direction = DOWN;
-    blit_pos = {0,0,16,24};
+    blit_pos = { 0, 0, 16, 24 };
     dropped_bomb = false;
 }
 
 void Player::update()
 {
-    if (Game::keys[SDLK_SPACE])
+/*    if (Game::keys[SDLK_SPACE])
     {
         //mametraka bombe (mdemarre anlme timer igerena ny cooldown)
 		 if (bomb_drop.get_state() == Timer::STOPPED)
@@ -32,7 +32,7 @@ void Player::update()
 			else if (direction == RIGHT)
 				Bomb bomb(position.x +  31, position.y);
 		 }
-    }
+    }*/
     if (Game::keys[SDLK_UP])
     {
         move(0, -0.5);
@@ -56,42 +56,41 @@ void Player::update()
     if (Game::keys[SDLK_DOWN] || Game::keys[SDLK_UP] || Game::keys[SDLK_LEFT] || Game::keys[SDLK_RIGHT])
     {
         if (timer.get_state() == Timer::STOPPED)
-            timer.start(); //alefa ilay timer rehefa misy votsindry ny direction anaovana animation
+            timer.start();
     }
 }
 
 void Player::draw()
 {
     Vector<int> pos(Renderer::camera->convert(position.x, position.y));
-    SDL_Rect tmp =
-    {
+    SDL_Rect tmp = {
         Sint16(pos.x), Sint16(pos.y),
         Uint16(size.x), Uint16(size.y)
     };
-    switch (direction) //anovana ny partie ho blitena am animation
+    switch (direction)
     {
-        case DOWN:
-            blit_pos.y = 0;
-            break;
-        case UP:
-            blit_pos.y = 72;
-            break;
-        case RIGHT:
-            blit_pos.y = 48;
-            break;
-        case LEFT:
-            blit_pos.y = 25;
-            break;
+	case DOWN:
+		blit_pos.y = 0;
+		break;
+	case UP:
+		blit_pos.y = 72;
+		break;
+	case RIGHT:
+		blit_pos.y = 48;
+		break;
+	case LEFT:
+		blit_pos.y = 25;
+		break;
+	default : ;
     }
     updateFrame();
-    SDL_BlitSurface(spritesheet,&blit_pos,Renderer::screen,&tmp);
+    SDL_BlitSurface(spritesheet, &blit_pos, Renderer::screen, &tmp);
 }
 
 void Player::updateFrame()
 {
     if (Game::keys[SDLK_DOWN] || Game::keys[SDLK_UP] || Game::keys[SDLK_LEFT] || Game::keys[SDLK_RIGHT])
     {
-        //rehefa misy voatsindry ny direction dia atao isaky ny 100ms ny chagement, afaka ovaina
         if (timer.get_elapsed_time() > 100)
         {
             if (blit_pos.x < 96)
@@ -101,8 +100,7 @@ void Player::updateFrame()
             timer.stop();
         }
     }
-    else if (!Game::keys[SDLK_DOWN] && !Game::keys[SDLK_UP] && !Game::keys[SDLK_LEFT] && !Game::keys[SDLK_RIGHT]
-			&& !Game::keys[SDLK_SPACE])
+    else if (!Game::keys[SDLK_SPACE])
 	{
 		blit_pos.x = 0;
 		timer.stop();

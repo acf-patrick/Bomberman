@@ -4,14 +4,18 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include "timer.h"
-#include "vector.h"
 #include "assetsmanager.h"
 #include "map_manager.h"
 #include "player.h"
+#include "controller.h"
 
 class Game
 {
 private:
+	bool addJoystick;
+
+	Controller *controller;
+
 	AssetManager asset_Manager;
 	MapManager map_manager;
 
@@ -27,22 +31,23 @@ private:
 	bool running, at_start_s;
 	int current_stage;
 
-	/* lay mapseho anlay hoe stage firy 'sika zao */
-	void stagePresentation();
 
 	void start();
+	void stagePresentation();
 	void play_stage();
 	void regulate_FPS();
 
 	void updateKeys();
 
+	void drawScene();
+
 public:
-	/* ialana amlay SDL_EnableKeyRepeat */
-	static std::array<bool, SDLK_LAST> keys;
 
 	Game();
 	~Game();
 
 	void run();
+
+	static std::array<bool, SDLK_LAST> keys;
 };
 

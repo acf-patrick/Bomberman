@@ -1,11 +1,12 @@
 #include "bomb.h"
+#include "assetsmanager.h"
 
-Bomb::Bomb(float x, float y)
+Bomb::Bomb(int x, int y)
 {
     position.setCartesian(x , y);
     size.setCartesian(30, 30);
-    sprite = IMG_Load("./data/images/bomb.png");
-    blit_pos = {0, 0, 30, 30};
+    sprite = AssetManager::instance->load_surface("./data/images/bomb.png");
+    blit_pos = { 0, 0, 30, 30 };
     is_set = false;
 }
 
@@ -33,8 +34,7 @@ void Bomb::update()
 void Bomb::draw()
 {
     Vector<int> pos(Renderer::camera->convert(position.x, position.y));
-    SDL_Rect tmp =
-    {
+    SDL_Rect tmp = {
         Sint16(pos.x), Sint16(pos.y),
         Uint16(size.x), Uint16(size.y)
     };

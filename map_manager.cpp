@@ -9,9 +9,9 @@ MapManager::MapManager()
     srand(time(0));
 
     AssetManager &asset_manager = *AssetManager::instance;
-	wall = asset_manager.load_surface("./data/images/wall.png", "wall");
-	ground = asset_manager.load_surface("./data/images/ground.png", "ground");
-    brick = asset_manager.load_surface("./data/images/brick.png", "brick");
+	wall = asset_manager.load_surface("./data/images/wall.png");
+	ground = asset_manager.load_surface("./data/images/ground.png");
+    brick = asset_manager.load_surface("./data/images/brick.png");
     brick_count = 30;
 }
 
@@ -37,7 +37,7 @@ void MapManager::generate_map()
             a = rand()%13;
             b = rand()%30;
         }
-        while (map[a][b] != GROUND && a <= 3  && b <= 3);
+        while (map[a][b] != GROUND or (a==1 and b==2) or (a==2 and b==1));
         map[a][b] = BRICK;
     }
 }
@@ -87,8 +87,8 @@ bool MapManager::checkCollision(GameObject *object)
 {
 	SDL_Rect pos(object->getBoundingBox());
 	/* checkena ny tiles manodidina anlay objet */
-    int xmin = pos.y / PX, xmax = (pos.y+pos.h) / PX;
-    int ymin = pos.x / PX, ymax = (pos.x+pos.w) / PX;
+    int xmin = pos.y / PX, xmax = (pos.y+pos.h-1) / PX;
+    int ymin = pos.x / PX, ymax = (pos.x+pos.w-1) / PX;
 
 	if ((xmin < 0 or ymin < 0) or (xmax >= MAP_H or ymax >= MAP_W))
 		return true;

@@ -116,5 +116,7 @@ TTF_Font* AssetManager::get_font(std::string ID)
 std::string AssetManager::getID(const char *file_name)
 {
     std::string file(file_name);
-    return std::string(file_name).substr(file.find_last_of("/"), file.find_last_of(".")+1);
+    int slash = file.find_last_of("/"),
+        dot = file.find_last_of(".");
+    return file.substr(slash+1, dot-(slash+1));
 }

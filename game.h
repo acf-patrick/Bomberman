@@ -4,14 +4,18 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include "timer.h"
-#include "vector.h"
 #include "assetsmanager.h"
 #include "map_manager.h"
 #include "player.h"
+#include "controller.h"
 
 class Game
 {
 private:
+	bool addJoystick;
+
+	Controller *controller;
+
 	AssetManager asset_Manager;
 	MapManager map_manager;
 
@@ -29,10 +33,8 @@ private:
 
 	std::array<bool, SDLK_LAST> keys;
 
-	/* lay mapseho anlay hoe stage firy 'sika zao */
-	void stagePresentation();
-
 	void start();
+	void stagePresentation();
 	void play_stage();
 	void regulate_FPS();
 

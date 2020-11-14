@@ -3,18 +3,26 @@
 #include "camera.h"
 #include "renderer.h"
 #include <map>
+#include <SDL/SDL_ttf.h>
+#include <sstream>
 
 Game::Game()
 {
+    #ifdef __ANDROID__
+        addJoystick = true;
+    #else
+        addJoystick = false;
+    #endif
+
     SDL_Init(SDL_INIT_EVERYTHING);
     keys.fill(false);
 
-    screen = SDL_SetVideoMode(1080, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-    Renderer::screen = SDL_CreateRGBSurface(SDL_HWSURFACE, WIDTH, HEIGHT, 32, 0, 0, 0, 0);
+    screen = SDL_SetVideoMode(addJoystick?800:WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    Renderer::screen = addJoystick?SDL_CreateRGBSurface(SDL_HWSURFACE, WIDTH, HEIGHT, 32, 0, 0, 0, 0):screen;
+    controller = addJoystick?new Controller(keys):nullptr;
 
     player = new Player(&map_manager, PX+1, PX+1);
 
-    /* manarabody anlay perso lay camera */
     Camera *c = new Camera(player);
     c->init({0, 0, WIDTH, HEIGHT});
     c->setLimit(MAP_W*PX, MAP_H*PX);
@@ -32,12 +40,15 @@ Game::Game()
     current_stage = 1;
 
     asset_Manager.load_surface("./data/images/buttons/dir.png");
+    asset_Manager.load_font("./data/fonts/supercell.ttf", 20);
 }
 
 Game::~Game()
 {
     delete player;
     player = nullptr;
+    delete controller;
+    controller = nullptr;
     asset_Manager.~AssetManager();
     Renderer::destroy();
     SDL_Quit();
@@ -64,7 +75,7 @@ void Game::start()
     pos.y = 0.5*(HEIGHT - start_s->h);
 
     fps_t.start();
-    asset_Manager.play_music("start screen", -1);
+    asset_Manager.play_music("start screen");
     while (true)
     {
         updateKeys();
@@ -110,6 +121,9 @@ void Game::play_stage()
         map_manager.draw();
         player->draw();
         SDL_Flip(Renderer::screen);
+        SDL_FillRect(screen, NULL, 0x0);
+        if (addJoystick)
+            controller->draw(screen);
         drawScene();
     }
 }
@@ -119,7 +133,7 @@ void Game::stagePresentation()
     SDL_FillRect(Renderer::screen, NULL, 0x0);
 
     SDL_Rect blit_stage, pos_stage;
-    blit_stage.x = 0; blit_stage.y = 0;
+    blit_stage.x = 0 ; blit_stage.y = 0;
     blit_stage.w = 40; blit_stage.h = 8;
     pos_stage.y = HEIGHT/2 - blit_stage.h/2;
     pos_stage.x = WIDTH/2 - blit_stage.w/2;
@@ -132,6 +146,7 @@ void Game::stagePresentation()
     SDL_BlitSurface(stage_s, &blit_stage, Renderer::screen, &pos_stage);
     SDL_Flip(Renderer::screen);
     drawScene();
+
 }
 
 void Game::updateKeys()
@@ -147,16 +162,21 @@ void Game::updateKeys()
 
 void Game::drawScene()
 {
-    SDL_FillRect(screen, NULL, 0x0);
+    if (!addJoystick)
+        return;
+
     SDL_Rect pos = {
         Sint16(0.5*(screen->w-Renderer::screen->w)),
         Sint16(0.5*(screen->h-Renderer::screen->h)),
         0, 0
     };
     SDL_BlitSurface(Renderer::screen, NULL, screen, &pos);
-    SDL_Surface *dir = asset_Manager.get_surface("dir");
-    pos.x = 15;
-    pos.y = Sint16(HEIGHT - (dir->h+15));
-    SDL_BlitSurface(dir, NULL, screen, &pos);
+    std::stringstream ss;
+    ss << "( " << event.motion.x << ", " << event.motion.y << " )";
+    SDL_Surface *s = TTF_RenderText_Solid(asset_Manager.get_font("supercell"), ss.str().c_str(), { 255, 255, 255 });
+    pos.x = 10;
+    pos.y = 10;
+    SDL_BlitSurface(s, NULL, screen, &pos);
+    SDL_FreeSurface(s);
     SDL_Flip(screen);
 }

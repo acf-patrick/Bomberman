@@ -37,7 +37,7 @@ void MapManager::generate_map()
             a = rand()%13;
             b = rand()%30;
         }
-        while (map[a][b] != GROUND);
+        while (map[a][b] != GROUND && a <= 3  && b <= 3);
         map[a][b] = BRICK;
     }
 }

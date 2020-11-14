@@ -10,9 +10,6 @@ class GameObject
 {
 protected:
 	Vector<float> position;
-
-    /* efa natao objet vector 'lay position, satria nilaina natao float,
-       dia aleo atao vector lay size fa ts SDL_Rect...lasa redondant lay position */
 	Vector<int> size;
 
 	std::vector<Group*> groups;
@@ -24,7 +21,7 @@ public:
 	virtual void update();
 	virtual void draw();
 
-	virtual void move(int, int);
+	virtual void move(float, float);
 
 	Vector<float> getPosition() const;
 	void setPosition(float, float);

@@ -4,18 +4,20 @@
 #include "movable.h"
 #include "vector.h"
 #include "timer.h"
-#include <SDL/SDL.h>
+#include "renderer.h"
+#include "bomb.h"
 
 class Player : public Movable
 {
 private:
+    enum {UP,DOWN,LEFT,RIGHT};
 	Vector<float> velocity;
 
+	int direction; //direction itodihanle perso
 	SDL_Surface *spritesheet;
-	/* amlay animation */
-    Timer timer;
-	/* ijerena anlay sprite tkn ho apesaina */
-	bool dying;
+    Timer timer, bomb_drop; //bomb_drop timer ho anle miandry vao afaka mandefa bombe hafa
+	bool dying, dropped_bomb;
+	SDL_Rect blit_pos;
 
     void updateFrame();
 

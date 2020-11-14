@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL/SDL_mixer.h>
+
 #define WIDTH 416
 #define HEIGHT 416
 #define MAP_W 30

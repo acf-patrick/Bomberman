@@ -32,5 +32,5 @@ int Timer::get_stop_time()
 
 bool Timer::get_state()
 {
-	return state == RUNNING;
+	return state;
 }

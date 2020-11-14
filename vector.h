@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 template<typename T>
 struct Vector

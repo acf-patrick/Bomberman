@@ -15,6 +15,7 @@ private:
 
 public:
     Bomb(int, int);
+	~Bomb() override final;
 
     void update() override final;
     void draw() override final;

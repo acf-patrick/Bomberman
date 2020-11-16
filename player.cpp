@@ -3,6 +3,8 @@
 #include "renderer.h"
 #include "assetsmanager.h"
 
+int Player::bombCnt = 0;
+
 Player::Player(MapManager *m, int x, int y) :
     Movable(m), dying(false)
 {
@@ -11,21 +13,23 @@ Player::Player(MapManager *m, int x, int y) :
     spritesheet = AssetManager::instance->load_surface("./data/images/spritesheet.png");
     direction = DOWN;
     cur_frame = 0;
-    dropped_bomb = false;
+    bombCnt = 0;
+}
+
+void Player::dropBomb()
+{
+	// checkena hoe tsis bomb
+	if (true or !bombCnt)
+	{
+		// create bomb //
+		bombCnt++;
+		cur_frame = 7;
+	}
 }
 
 void Player::update()
 {
-    if (Game::keys[SDLK_SPACE])
-    {
-        //mametraka bombe (mdemarre anlme timer igerena ny cooldown)
-		if (bomb_drop.get_state() == Timer::STOPPED)
-		{
-			bomb_drop.start();
-			dropped_bomb = true;
-		}
-    }
-    else
+	if (!Game::keys[SDLK_SPACE])
 	{
 		if (Game::keys[SDLK_UP])
 		{
@@ -68,21 +72,17 @@ void Player::draw()
 
 void Player::updateFrame()
 {
-	if (Game::keys[SDLK_DOWN] || Game::keys[SDLK_UP] || Game::keys[SDLK_LEFT] || Game::keys[SDLK_RIGHT])
-    {
-        if (timer.get_elapsed_time() > 100)
-        {
-			cur_frame = (cur_frame+1)%7;
-            timer.start();
-        }
-    }
-    else if (!Game::keys[SDLK_SPACE])
-		cur_frame = 0;
-    if (dropped_bomb)
+    if (!Game::keys[SDLK_SPACE])
 	{
-		cur_frame = 7;
-		dropped_bomb = false;
+		if (Game::keys[SDLK_DOWN] || Game::keys[SDLK_UP] || Game::keys[SDLK_LEFT] || Game::keys[SDLK_RIGHT])
+		{
+			if (timer.get_elapsed_time() > 100)
+			{
+				cur_frame = (cur_frame+1)%7;
+				timer.start();
+			}
+		}
+		else
+			cur_frame = 0;
 	}
-	if (bomb_drop.get_elapsed_time() > 1500) //tokony ampiana condition mijery raha mbola misy bombe active kely eto
-		bomb_drop.stop();					//rehefa implemente ny bombe
 }

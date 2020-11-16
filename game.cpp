@@ -42,6 +42,7 @@ Game::Game()
     current_stage = 1;
 
     asset_Manager.load_font("./data/fonts/supercell.ttf", 20);
+    Mix_VolumeMusic(0);
 }
 
 Game::~Game()
@@ -107,6 +108,8 @@ void Game::play_stage()
         if (event.type == SDL_QUIT)
             break;
 
+        if (addJoystick)
+            controller->update();
         player->update();
         Renderer::camera->update();
         regulate_FPS();
@@ -148,7 +151,11 @@ void Game::updateKeys()
     while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_KEYDOWN)
+        {
             keys[event.key.keysym.sym] = true;
+            if (event.key.keysym.sym == SDLK_SPACE)
+                player->dropBomb();
+        }
         if (event.type == SDL_KEYUP)
             keys[event.key.keysym.sym] = false;
     }

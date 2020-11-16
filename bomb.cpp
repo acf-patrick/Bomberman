@@ -1,4 +1,5 @@
 #include "bomb.h"
+#include "player.h"
 #include "assetsmanager.h"
 
 Bomb::Bomb(int x, int y)
@@ -8,6 +9,11 @@ Bomb::Bomb(int x, int y)
     sprite = AssetManager::instance->load_surface("./data/images/bomb.png");
     blit_pos = { 0, 0, 30, 30 };
     is_set = false;
+}
+
+Bomb::~Bomb()
+{
+    Player::bombCnt--;
 }
 
 void Bomb::update()

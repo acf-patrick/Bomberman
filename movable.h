@@ -6,7 +6,7 @@ class MapManager;
 
 class Movable : public GameObject
 {
-private:
+protected:
 	MapManager *map;
 
 	void tryMove(float, float);

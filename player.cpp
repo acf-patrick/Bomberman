@@ -1,9 +1,9 @@
+#include "defs.h"
 #include "game.h"
+#include "bomb.h"
 #include "player.h"
 #include "renderer.h"
 #include "assetsmanager.h"
-
-int Player::bombCnt = 0;
 
 Player::Player(MapManager *m, int x, int y) :
     Movable(m), dying(false)
@@ -13,16 +13,36 @@ Player::Player(MapManager *m, int x, int y) :
     spritesheet = AssetManager::instance->load_surface("./data/images/spritesheet.png");
     direction = DOWN;
     cur_frame = 0;
-    bombCnt = 0;
 }
 
 void Player::dropBomb()
 {
 	// checkena hoe tsis bomb
-	if (true or !bombCnt)
+	if (true or Bomb::number == 0)
 	{
-		// create bomb //
-		bombCnt++;
+		// bomb : taille (size.y, size.y)
+		int x, y;
+		switch (direction)
+		{
+		case UP:
+			x = position.x + 0.5*(size.x-size.y);
+            y = position.y - size.y + 5;
+            break;
+		case DOWN:
+			x = position.x + 0.5*(size.x-size.y);
+            y = position.y + size.y;
+            break;
+		case RIGHT:
+            x = position.x + size.x;
+            y = position.y;
+			break;
+		case LEFT:
+            x = position.x - size.y;
+            y = position.y;
+            break;
+		default : ;
+		}
+        map->addBomb(x, y);
 		cur_frame = 7;
 	}
 }

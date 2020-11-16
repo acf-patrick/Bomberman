@@ -1,7 +1,8 @@
 #include "map_manager.h"
 #include "assetsmanager.h"
 #include "renderer.h"
-#include "vector.h"
+#include "object.h"
+#include "bomb.h"
 #include <ctime>
 
 MapManager::MapManager()
@@ -42,6 +43,11 @@ void MapManager::generate_map()
     }
 }
 
+void MapManager::update()
+{
+	bombs.update();
+}
+
 void MapManager::draw()
 {
 	SDL_Rect viewport(Renderer::camera->getViewport()), pos;
@@ -79,6 +85,8 @@ void MapManager::draw()
 			}
 		}
 	}
+
+	bombs.draw();
 }
 
 bool MapManager::checkCollision(GameObject *object)
@@ -97,4 +105,9 @@ bool MapManager::checkCollision(GameObject *object)
 				return true;
 
 	return false;
+}
+
+void MapManager::addBomb(int x, int y)
+{
+	bombs.add(new Bomb(x, y));
 }

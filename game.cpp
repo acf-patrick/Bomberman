@@ -110,6 +110,7 @@ void Game::play_stage()
 
         if (addJoystick)
             controller->update();
+        map_manager.update();
         player->update();
         Renderer::camera->update();
         regulate_FPS();

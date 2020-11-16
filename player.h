@@ -22,10 +22,6 @@ private:
     void updateFrame();
 
 public:
-	// ilaina amlay ref manan powerup izy ... dia static satria ho
-	// modifien'i Bomb ary am destructor, ray ian raha teo ny
-	// isan'ny player
-	static int bombCnt;
 
 	Player(MapManager*, int, int);
 

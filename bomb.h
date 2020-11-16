@@ -9,11 +9,12 @@ class Bomb : public GameObject
 {
 private:
     SDL_Surface *sprite;
-    SDL_Rect blit_pos;
+    int cur_frame;
     Timer timer;
-    bool is_set;
 
 public:
+	static int number;
+
     Bomb(int, int);
 	~Bomb() override final;
 

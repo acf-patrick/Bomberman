@@ -109,5 +109,5 @@ bool MapManager::checkCollision(GameObject *object)
 
 void MapManager::addBomb(int x, int y)
 {
-	bombs.add(new Bomb(x, y));
+	bombs.create<Bomb>(x, y);
 }

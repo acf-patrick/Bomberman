@@ -7,12 +7,16 @@ int Bomb::number = 0;
 
 Bomb::Bomb(int x, int y)
 {
-    // x = (x/PX)*PX;
-    // y = (y/PX)*PX;
+    x = (x/PX)*PX;
+    y = (y/PX)*PX;
+
+    size.setCartesian(24, 24);
+    x = x+(PX-size.x)*0.5;
+    y = y+(PX-size.y)*0.5;
+
     number++;
 
     position.setCartesian(x , y);
-    size.setCartesian(24, 24);
     sprite = AssetManager::instance->get_surface("bomb");
     if (!sprite)
         sprite = AssetManager::instance->load_surface("./data/images/bomb.png");
@@ -41,5 +45,5 @@ void Bomb::draw()
         Sint16(cur_frame*size.x), 0,
         Uint16(size.x), Uint16(size.y)
     };
-    SDL_BlitSurface(sprite, &blit_pos,Renderer::screen, &tmp);
+    SDL_BlitSurface(sprite, &blit_pos, Renderer::screen, &tmp);
 }

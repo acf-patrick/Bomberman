@@ -10,4 +10,3 @@ struct Renderer
 
 	static void destroy();
 };
-

@@ -21,11 +21,12 @@ public:
 
     void add(GameObject*);
 
-    /* sady miCreer objet no miAjouter anlay izy anaty groupe */
+    /* sady miCreer objet, no miAjouter anlay izy anaty groupe */
     /* ex : Enemy* enemy = group.create<Slime>(player, x, y); */
     template<typename objectType, typename... argType>
     objectType* create(argType&&... args)
     {
+        // checkena sod ts GameObject
         if (std::is_base_of<GameObject, objectType>::value == false)
             return nullptr;
         objectType *obj = new objectType(std::forward<argType>(args)...);

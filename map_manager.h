@@ -12,12 +12,14 @@ class MapManager
 private:
    enum { WALL, GROUND, BRICK };
 
-   SDL_Surface *wall,*ground,*brick;
+   SDL_Surface *sprites[3];
 
    int map[MAP_H][MAP_W];
    int brick_count;
 
-   Group bombs;
+   bool bombs_arr[MAP_H][MAP_W];
+
+   Group bombs, &explosions;
 
 public:
     MapManager();

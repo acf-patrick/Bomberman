@@ -1,5 +1,6 @@
 #include "bomb.h"
 #include "defs.h"
+#include "explosion.h"
 #include "assetsmanager.h"
 #include <SDL/SDL.h>
 
@@ -9,8 +10,8 @@ Bomb::Bomb(int x, int y)
 {
     size.setCartesian(24, 24);
 
-    x = x+(PX-size.x)*0.5;
-    y = y+(PX-size.y)*0.5;
+    x += (PX-size.x)*0.5;
+    y += (PX-size.y)*0.5;
 
     position.setCartesian(x , y);
     sprite = AssetManager::instance->get_surface("bomb");
@@ -24,6 +25,8 @@ Bomb::Bomb(int x, int y)
 Bomb::~Bomb()
 {
     number--;
+    // create explosion here
+    // new Explosion(int(position.x)/PX, int(position.y)/PX);
 }
 
 void Bomb::update()

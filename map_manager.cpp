@@ -1,18 +1,24 @@
-#include "map_manager.h"
 #include "assetsmanager.h"
+#include "map_manager.h"
+#include "explosion.h"
 #include "renderer.h"
 #include "object.h"
 #include "bomb.h"
 #include <ctime>
 
-MapManager::MapManager()
+MapManager::MapManager() :
+	explosions(Explosion::group)
 {
     srand(time(0));
 
+    for (int i=0; i<MAP_H; ++i)
+		for (int j=0; j<MAP_W; ++j)
+			bombs_arr[i][j] = false;
+
     AssetManager &asset_manager = *AssetManager::instance;
-	wall = asset_manager.load_surface("./data/images/wall.png");
-	ground = asset_manager.load_surface("./data/images/ground.png");
-    brick = asset_manager.load_surface("./data/images/brick.png");
+	sprites[WALL] = asset_manager.load_surface("./data/images/wall.png");
+    sprites[BRICK] = asset_manager.load_surface("./data/images/brick.png");
+	sprites[GROUND] = asset_manager.load_surface("./data/images/ground.png");
     brick_count = 30;
 }
 
@@ -46,6 +52,7 @@ void MapManager::generate_map()
 void MapManager::update()
 {
 	bombs.update();
+	explosions.update();
 }
 
 void MapManager::draw()
@@ -70,23 +77,12 @@ void MapManager::draw()
 			Vector<int> dest(Renderer::camera->convert(j*PX, i*PX));
 			pos.x = dest.x;
 			pos.y = dest.y;
-			switch (map[i][j])
-			{
-			case GROUND:
-            	SDL_BlitSurface(ground, NULL, Renderer::screen, &pos);
-            	break;
-			case WALL:
-            	SDL_BlitSurface(wall, NULL, Renderer::screen, &pos);
-				break;
-			case BRICK:
-            	SDL_BlitSurface(brick, NULL, Renderer::screen, &pos);
-            	break;
-			default : ;
-			}
+			SDL_BlitSurface(sprites[map[i][j]], NULL, Renderer::screen, &pos);
 		}
 	}
 
 	bombs.draw();
+	// explosions.draw();
 }
 
 bool MapManager::checkCollision(GameObject *object)
@@ -117,12 +113,9 @@ bool MapManager::checkCollision(GameObject *object)
 // params : coordonnées anlay case
 void MapManager::addBomb(int x, int y)
 {
-	for (auto& bomb : bombs)
-		/* mCreer point kely dia jerena rah midona eo lay bomb */
-		// efa mis bomb eo matoa midona
-        if (bomb->collide({ x*PX+5, y*PX+5, 1, 1 }))
-			return;
-
-	if (map[y][x] == GROUND)
+	if (map[y][x] == GROUND or bombs_arr[y][x])
+	{
 		bombs.create<Bomb>(x*PX, y*PX);
+		bombs_arr[y][x] = true;
+	}
 }

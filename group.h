@@ -42,11 +42,11 @@ public:
 
     GameObject* firstObjectCollidingWith(const GameObject&);
 
-    using iter = std::vector<GameObject*>::iterator;
+    using iterator = std::vector<GameObject*>::iterator;
 
-    iter begin()
+    iterator begin()
     { return objects.begin(); }
-    iter end()
+    iterator end()
     { return objects.end(); }
 
 friend class GameObject;

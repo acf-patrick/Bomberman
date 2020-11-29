@@ -10,7 +10,7 @@ std::array<bool, SDLK_LAST> Game::keys;
 
 Game::Game()
 {
-    #ifndef __ANDROID__
+    #ifdef __ANDROID__
         addJoystick = true;
     #else
         addJoystick = false;

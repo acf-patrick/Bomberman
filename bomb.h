@@ -1,8 +1,9 @@
 #pragma once
 
+#include "timer.h"
+#include "group.h"
 #include "object.h"
 #include "vector.h"
-#include "timer.h"
 #include "renderer.h"
 
 class Bomb : public GameObject

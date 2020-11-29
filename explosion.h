@@ -1,10 +1,18 @@
 #pragma once
 
-#include "object.h"
 #include "group.h"
+#include "timer.h"
+#include "object.h"
 
 class Explosion : public GameObject
 {
+private:
+	SDL_Surface *spritesheet;
+
+	int range;
+
+	Timer timer;
+
 public:
 	static Group group;
 
@@ -13,9 +21,4 @@ public:
 
 	void update() override final;
 	void draw() override final;
-
-private:
-	SDL_Surface *spritesheet;
-
-	int range;
 };

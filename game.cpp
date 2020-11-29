@@ -94,6 +94,7 @@ void Game::start()
 void Game::play_stage()
 {
     fps_t.start();
+    keys.fill(false);
 
     asset_Manager.play_music("stage start");
     SDL_Delay(3200);
@@ -144,7 +145,6 @@ void Game::stagePresentation()
     SDL_BlitSurface(stage_s, &blit_stage, Renderer::screen, &pos_stage);
     SDL_Flip(Renderer::screen);
     drawScene();
-
 }
 
 void Game::updateKeys()

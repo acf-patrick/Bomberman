@@ -82,7 +82,7 @@ void MapManager::draw()
 	}
 
 	bombs.draw();
-	// explosions.draw();
+	explosions.draw();
 }
 
 bool MapManager::checkCollision(GameObject *object)

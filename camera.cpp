@@ -35,4 +35,4 @@ Vector<int> Camera::convert(int x, int y)
 { return Vector<int>(x-position.x, y-position.y); }
 
 SDL_Rect Camera::getViewport()
-{ return SDL_Rect { Sint16(position.x), Sint16(position.y), Uint16(size.x), Uint16(size.y) }; }
+{ return { Sint16(position.x), Sint16(position.y), Uint16(size.x), Uint16(size.y) }; }

@@ -35,12 +35,11 @@ public:
     }
 
     void remove(GameObject*);
-    /* amzay tsika afak manao hoe :
-		enemies.remove({ truc, bidule, chose });
-     */
     void remove(const std::vector<GameObject*>&);
 
     bool has(GameObject*);
+
+    GameObject* firstObjectCollidingWith(const GameObject&);
 
 friend class GameObject;
 };

@@ -22,27 +22,27 @@ void Player::dropBomb()
 	{
 		// bomb : taille (size.y, size.y)
 		int x, y;
+		x = position.x + 0.5*size.x;
+		x /= PX;
+		y = position.y + 0.5*size.y;
+		y /= PX;
 		switch (direction)
 		{
 		case UP:
-			x = position.x + 0.5*(size.x-size.y);
-            y = position.y - size.y + 5;
+            y = !y?0:(y-1);
             break;
 		case DOWN:
-			x = position.x + 0.5*(size.x-size.y);
-            y = position.y + size.y;
+			y = (y>=MAP_H)?(MAP_H-1):(y+1);
             break;
 		case RIGHT:
-            x = position.x + size.x;
-            y = position.y;
+			x = (x>=MAP_W)?(MAP_W-1):(x+1);
 			break;
 		case LEFT:
-            x = position.x - size.y;
-            y = position.y;
+            x = !x?0:(x-1);
             break;
 		default : ;
 		}
-        map->addBomb(x, y);
+        map->addBomb(x*PX, y*PX);
 		cur_frame = 7;
 	}
 }

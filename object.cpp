@@ -76,11 +76,11 @@ bool GameObject::collide(Group *group, bool _kill) const
 				to_remove.push_back(object);
 		}
 
-	/* segfault manadala rah natao tanatin'lay boucle...
+	/* segfault manadala rah natao tanatin'lay boucle ...
 	sad miIterer anlay container "objects" mants no manàla
 	item */
 	for (auto &object : to_remove)
-	group->remove(object);
+		group->remove(object);
 	return ret;
 }
 

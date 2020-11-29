@@ -7,20 +7,18 @@ int Bomb::number = 0;
 
 Bomb::Bomb(int x, int y)
 {
-    x = (x/PX)*PX;
-    y = (y/PX)*PX;
-
     size.setCartesian(24, 24);
+
     x = x+(PX-size.x)*0.5;
     y = y+(PX-size.y)*0.5;
-
-    number++;
 
     position.setCartesian(x , y);
     sprite = AssetManager::instance->get_surface("bomb");
     if (!sprite)
         sprite = AssetManager::instance->load_surface("./data/images/bomb.png");
     cur_frame = 0;
+
+    number++;
 }
 
 Bomb::~Bomb()

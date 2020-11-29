@@ -111,7 +111,7 @@ Mix_Chunk* AssetManager::get_chunk(std::string ID)
 { return chunks[ID]; }
 
 TTF_Font* AssetManager::get_font(std::string ID)
-{return fonts[ID]; }
+{ return fonts[ID]; }
 
 std::string AssetManager::getID(const char *file_name)
 {

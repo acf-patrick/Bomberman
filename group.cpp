@@ -5,12 +5,10 @@
 
 Group::~Group()
 {
-	int i(0);
-    for (auto &object : objects)
+    for (int i = 0; i<(int)objects.size(); ++i)
     {
-    	delete object;
+    	delete objects[i];
     	objects[i] = nullptr;
-    	++i;
     }
 }
 
@@ -22,9 +20,10 @@ void Group::update()
 
 void Group::draw()
 {
+	SDL_Rect camera(Renderer::camera->getViewport());
 	for (auto &object : objects)
 		// zay hita eo am écran ian no dessinena
-		if (object->collide(Renderer::camera->getViewport()))
+		if (object->collide(camera))
 			object->draw();
 }
 
@@ -59,3 +58,10 @@ void Group::remove(GameObject *object)
     g.erase(std::remove(std::begin(g), std::end(g), this), std::end(g));
 }
 
+GameObject* Group::firstObjectCollidingWith(const GameObject& object)
+{
+    for (auto& obj : objects)
+        if (obj->collide(object) and object.collide(*obj))
+            return obj;
+	return nullptr;
+}

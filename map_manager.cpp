@@ -91,6 +91,13 @@ void MapManager::draw()
 
 bool MapManager::checkCollision(GameObject *object)
 {
+	/* collision between objects */
+
+//    if (bombs.firstObjectCollidingWith(*object))
+//        return true;
+
+	/* collision between tiles and object */
+
 	SDL_Rect pos(object->getBoundingBox());
 
     int xmin = pos.y / PX, xmax = (pos.y+pos.h-1) / PX;
@@ -107,7 +114,15 @@ bool MapManager::checkCollision(GameObject *object)
 	return false;
 }
 
+// params : coordonnées anlay case
 void MapManager::addBomb(int x, int y)
 {
-	bombs.create<Bomb>(x, y);
+	for (auto& bomb : bombs)
+		/* mCreer point kely dia jerena rah midona eo lay bomb */
+		// efa mis bomb eo matoa midona
+        if (bomb->collide({ x*PX+5, y*PX+5, 1, 1 }))
+			return;
+
+	if (map[y][x] == GROUND)
+		bombs.create<Bomb>(x*PX, y*PX);
 }

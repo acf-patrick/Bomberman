@@ -10,7 +10,7 @@ class GameObject;
 class MapManager
 {
 private:
-   enum { WALL,GROUND,BRICK } ;
+   enum { WALL, GROUND, BRICK };
 
    SDL_Surface *wall,*ground,*brick;
 

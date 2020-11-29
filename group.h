@@ -12,6 +12,7 @@ private:
     std::vector<GameObject*> objects;
 
 public:
+
     Group() {}
     virtual ~Group();
 
@@ -40,6 +41,13 @@ public:
     bool has(GameObject*);
 
     GameObject* firstObjectCollidingWith(const GameObject&);
+
+    using iter = std::vector<GameObject*>::iterator;
+
+    iter begin()
+    { return objects.begin(); }
+    iter end()
+    { return objects.end(); }
 
 friend class GameObject;
 };

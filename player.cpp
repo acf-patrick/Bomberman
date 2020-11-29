@@ -20,29 +20,35 @@ void Player::dropBomb()
 	// checkena hoe tsis bomb
 	if (true or Bomb::number == 0)
 	{
-		// bomb : taille (size.y, size.y)
+		/* distance en px minimum am bord nlay case sy ny bord nlay perso */
+        const int dist = 5;
+
+        /* center */
 		int x, y;
-		x = position.x + 0.5*size.x;
-		x /= PX;
-		y = position.y + 0.5*size.y;
-		y /= PX;
+		x = int(position.x + 0.5*size.x)/PX;
+		y = int(position.y + 0.5*size.y)/PX;
+
 		switch (direction)
 		{
 		case UP:
-            y = !y?0:(y-1);
+            if (std::abs(y*PX - position.y) <= dist)
+				y = !y?0:(y-1);
             break;
 		case DOWN:
-			y = (y>=MAP_H)?(MAP_H-1):(y+1);
+			if (std::abs((y+1)*PX - (position.y+size.y)) <= dist)
+				y = (y>=MAP_H)?(MAP_H-1):(y+1);
             break;
 		case RIGHT:
-			x = (x>=MAP_W)?(MAP_W-1):(x+1);
+			if (std::abs((x+1)*PX - (position.x+size.x)) <= dist)
+				x = (x>=MAP_W)?(MAP_W-1):(x+1);
 			break;
 		case LEFT:
-            x = !x?0:(x-1);
+			if (std::abs(x*PX - position.x) <= dist)
+				x = !x?0:(x-1);
             break;
 		default : ;
 		}
-        map->addBomb(x*PX, y*PX);
+        map->addBomb(x, y);
 		cur_frame = 7;
 	}
 }
@@ -56,19 +62,19 @@ void Player::update()
 			move(0, -0.5);
 			direction = UP;
 		}
-		if (Game::keys[SDLK_DOWN])
-		{
-			move(0,  0.5);
-			direction = DOWN;
-		}
 		if (Game::keys[SDLK_LEFT])
 		{
 			move(-0.5, 0);
 			direction = LEFT;
 		}
+		if (Game::keys[SDLK_DOWN])
+		{
+			move(0, 0.5);
+			direction = DOWN;
+		}
 		if (Game::keys[SDLK_RIGHT])
 		{
-			move( 0.5, 0);
+			move(0.5, 0);
 			direction = RIGHT;
 		}
 	}

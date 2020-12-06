@@ -1,10 +1,19 @@
 #include "group.h"
 #include "object.h"
-#include <algorithm>
 #include "renderer.h"
+#include <algorithm>
+
+std::vector<GameObject*> Group::collector;
 
 Group::~Group()
 {
+	if (!collector.empty())
+	{
+		for (auto &obj : collector)
+			delete obj;
+		collector.clear();
+	}
+
     for (int i = 0; i<(int)objects.size(); ++i)
     {
     	delete objects[i];
@@ -23,7 +32,7 @@ void Group::draw()
 	SDL_Rect camera(Renderer::camera->getViewport());
 	for (auto &object : objects)
 		// zay hita eo am écran ian no dessinena
-		if (object->collide(camera))
+		// if (object->collide(camera))
 			object->draw();
 }
 

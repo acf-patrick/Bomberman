@@ -11,13 +11,14 @@ class Bomb : public GameObject
 private:
     SDL_Surface *sprite;
     int cur_frame;
-    Timer timer;
+    Timer timer, counter;
 
 public:
 	static int number;
 
     Bomb(int, int);
-	~Bomb() override final;
+
+	void explode();
 
     void update() override final;
     void draw() override final;

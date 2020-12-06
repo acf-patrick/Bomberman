@@ -20,13 +20,15 @@ Bomb::Bomb(int x, int y)
     cur_frame = 0;
 
     number++;
+
+    counter.start();
 }
 
-Bomb::~Bomb()
+void Bomb::explode()
 {
     number--;
-    // create explosion here
-    // new Explosion(int(position.x)/PX, int(position.y)/PX);
+    new Explosion(int(position.x)/PX, int(position.y)/PX, 3);
+    kill();
 }
 
 void Bomb::update()
@@ -36,6 +38,8 @@ void Bomb::update()
         cur_frame = (cur_frame+1)%3;
         timer.start();
     }
+    if (counter.get_elapsed_time() >= 5000)
+        explode();
 }
 
 void Bomb::draw()

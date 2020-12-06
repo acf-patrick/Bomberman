@@ -36,6 +36,7 @@ void GameObject::kill()
     for (auto &group : groups)
 		group->remove(this);
 	groups.clear();
+	Group::collector.emplace_back(this);
 }
 
 bool GameObject::collide(const GameObject& obj) const

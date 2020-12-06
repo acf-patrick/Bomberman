@@ -11,6 +11,11 @@ class Group
 private:
     std::vector<GameObject*> objects;
 
+    // mis anren objet antsoina ftsn ny méthode kill
+    // ts détruit zan lay objet fa mbola anaty mémoir ao
+    // stockena ato amty daoly dia destroyena fts aveo
+    static std::vector<GameObject*> collector;
+
 public:
 
     Group() {}

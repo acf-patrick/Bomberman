@@ -61,7 +61,7 @@ void Group::remove(GameObject *object)
 GameObject* Group::firstObjectCollidingWith(const GameObject& object)
 {
     for (auto& obj : objects)
-        if (obj->collide(object) and object.collide(*obj))
+		if (mutual_collision(*obj, object))
             return obj;
 	return nullptr;
 }

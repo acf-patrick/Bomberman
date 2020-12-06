@@ -6,7 +6,8 @@
 #include "assetsmanager.h"
 
 Player::Player(MapManager *m, int x, int y) :
-    Movable(m), dying(false)
+    Movable(m), firstContact(nullptr),
+    dying(false)
 {
     position.setCartesian(x, y);
     size.setCartesian(16, 24);
@@ -20,6 +21,7 @@ void Player::dropBomb()
 	// checkena hoe tsis bomb
 	if (true or Bomb::number == 0)
 	{
+
 		/* distance en px minimum am bord nlay case sy ny bord nlay perso */
         const int dist = 5;
 
@@ -48,13 +50,17 @@ void Player::dropBomb()
             break;
 		default : ;
 		}
-        map->addBomb(x, y);
+        firstContact = map->addBomb(x, y);
 		cur_frame = 7;
 	}
 }
 
 void Player::update()
 {
+	if (firstContact)
+		if (!GameObject::collide(*firstContact))
+            firstContact = nullptr;
+
 	if (!Game::keys[SDLK_SPACE])
 	{
 		if (Game::keys[SDLK_UP])
@@ -111,4 +117,11 @@ void Player::updateFrame()
 		else
 			cur_frame = 0;
 	}
+}
+
+bool Player::collide(const GameObject& obj) const
+{
+    if (firstContact)
+		return false;
+	return GameObject::collide(obj);
 }

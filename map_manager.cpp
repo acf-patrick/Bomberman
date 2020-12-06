@@ -89,8 +89,8 @@ bool MapManager::checkCollision(GameObject *object)
 {
 	/* collision between objects */
 
-//    if (bombs.firstObjectCollidingWith(*object))
-//        return true;
+    if (bombs.firstObjectCollidingWith(*object))
+        return true;
 
 	/* collision between tiles and object */
 
@@ -111,11 +111,13 @@ bool MapManager::checkCollision(GameObject *object)
 }
 
 // params : coordonnées anlay case
-void MapManager::addBomb(int x, int y)
+GameObject* MapManager::addBomb(int x, int y)
 {
 	if (map[y][x] == GROUND or bombs_arr[y][x])
 	{
-		bombs.create<Bomb>(x*PX, y*PX);
 		bombs_arr[y][x] = true;
+		return bombs.create<Bomb>(x*PX, y*PX);
 	}
+
+	return nullptr;
 }

@@ -29,7 +29,7 @@ public:
 
     bool checkCollision(GameObject*);
 
-    void addBomb(int, int);
+    GameObject* addBomb(int, int);
 
     void update();
     void draw();

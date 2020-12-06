@@ -63,3 +63,5 @@ public:
 
 friend class Group;
 };
+
+bool mutual_collision(const GameObject&, const GameObject&);

@@ -12,6 +12,10 @@ class Player : public Movable
 private:
     enum { UP, DOWN, LEFT, RIGHT };
 
+    // rehefa lay mametraka bomb dia descativena
+    // kely aloha ny collision fa mihitsoka ao lery
+    GameObject *firstContact;
+
 	int direction;
 	int cur_frame;
 
@@ -25,6 +29,7 @@ public:
 
 	Player(MapManager*, int, int);
 
+	bool collide(const GameObject&) const override final;
 	void update() override final;
 	void draw() override final;
 

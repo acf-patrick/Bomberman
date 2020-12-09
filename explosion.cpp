@@ -3,19 +3,6 @@
 #include "explosion.h"
 #include "assetsmanager.h"
 
-// for transparency
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    #define RMASK 0xff000000
-    #define GMASK 0x00ff0000
-    #define BMASK 0x0000ff00
-    #define AMASK 0x000000ff
-#else
-    #define AMASK 0xff000000
-    #define BMASK 0x00ff0000
-    #define GMASK 0x0000ff00
-    #define RMASK 0x000000ff
-#endif
-
 Group Explosion::group;
 
 Explosion::Explosion(int x, int y, int portee):
@@ -36,12 +23,13 @@ Explosion::Explosion(int x, int y, int portee):
 
 	for (int i=0; i<3; ++i)
 	{
-		surface[i] = SDL_CreateRGBSurface(SDL_HWSURFACE, size.x, size.y, 32, RMASK, GMASK, BMASK, AMASK);
+		surface[i] = SDL_CreateRGBSurface(SDL_SWSURFACE, size.x, size.y, 32, 0, 0, 0, 0);
 		if (!surface[i])
 		{
 			std::cerr << "erreur lors de la création de l'éxplosion" << std::endl;
 			continue;
 		}
+		SDL_FillRect(surface[i], NULL, 0xff00ff);
 
 		// center
 		SDL_Rect src = { 0, Sint16(i*PX), PX, PX }, dest = { Sint16((size.x-PX)*0.5), Sint16((size.y-PX)*0.5) };
@@ -89,7 +77,7 @@ Explosion::Explosion(int x, int y, int portee):
 		src.x += PX;
 		dest.x = Sint16(size.x-PX);
 		SDL_BlitSurface(spritesheet, &src, surface[i], &dest);
-		SDL_SetColorKey(surface[i], SDL_SRCCOLORKEY, 0xff00ffff);
+		SDL_SetColorKey(surface[i], SDL_SRCCOLORKEY, 0xff00ff);
 	}
 
 	timer.start();

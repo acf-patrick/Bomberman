@@ -7,6 +7,7 @@ std::vector<GameObject*> Group::collector;
 
 Group::~Group()
 {
+	// already cleaned
 	if (!collector.empty())
 	{
 		for (auto &obj : collector)
@@ -67,7 +68,7 @@ void Group::remove(GameObject *object)
     g.erase(std::remove(std::begin(g), std::end(g), this), std::end(g));
 }
 
-GameObject* Group::firstObjectCollidingWith(const GameObject& object)
+GameObject* Group::firstObjectCollidingWith(GameObject& object)
 {
     for (auto& obj : objects)
 		if (mutual_collision(*obj, object))

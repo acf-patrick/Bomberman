@@ -39,7 +39,7 @@ void GameObject::kill()
 	Group::collector.emplace_back(this);
 }
 
-bool GameObject::collide(const GameObject& obj) const
+bool GameObject::collide(GameObject& obj)
 {
 	const Vector<float> &pos = obj.position;
 	const Vector<int> &s = obj.size;
@@ -51,7 +51,7 @@ bool GameObject::collide(const GameObject& obj) const
 			);
 }
 
-bool GameObject::collide(const SDL_Rect& rect) const
+bool GameObject::collide(SDL_Rect& rect)
 {
 	GameObject obj;
 	obj.setPosition(rect.x, rect.y);
@@ -62,10 +62,10 @@ bool GameObject::collide(const SDL_Rect& rect) const
 /* mety samy manana ny méthode "collide" ny o1 sy o2
 dia ts maints checkena daoly iz roa ... virtual mants iz ao
  */
-bool mutual_collision(const GameObject& o1, const GameObject& o2)
-{ return o1.collide(o2) and o2.collide(o2); }
+bool mutual_collision(GameObject& o1, GameObject& o2)
+{ return o1.collide(o2) and o2.collide(o1); }
 
-bool GameObject::collide(Group *group, bool _kill) const
+bool GameObject::collide(Group *group, bool _kill)
 {
 	bool ret(false);
 	std::vector<GameObject*> to_remove;
@@ -85,7 +85,7 @@ bool GameObject::collide(Group *group, bool _kill) const
 	return ret;
 }
 
-std::vector<GameObject*> GameObject::collide(const Group& group) const
+std::vector<GameObject*> GameObject::collide(Group& group)
 {
     std::vector<GameObject*> ret;
     for (auto &obj : group.objects)

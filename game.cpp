@@ -42,7 +42,7 @@ Game::Game()
     current_stage = 1;
 
     asset_Manager.load_font("./data/fonts/supercell.ttf", 20);
-    Mix_VolumeMusic(0);
+    // Mix_VolumeMusic(0);
 }
 
 Game::~Game()
@@ -80,7 +80,7 @@ void Game::start()
     asset_Manager.play_music("start screen");
     while (true)
     {
-        updateKeys();
+        SDL_PollEvent(&event);
         if (event.type == SDL_KEYDOWN)
             break;
         regulate_FPS();

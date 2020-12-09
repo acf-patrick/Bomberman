@@ -5,6 +5,7 @@
 #include <SDL/SDL.h>
 
 int Bomb::number = 0;
+bool Bomb::array[MAP_H][MAP_W];
 
 Bomb::Bomb(int x, int y)
 {
@@ -26,6 +27,7 @@ Bomb::Bomb(int x, int y)
 
 void Bomb::explode()
 {
+    array[int(position.x)/PX][int(position.y)/PX] = false;
     number--;
     new Explosion(int(position.x)/PX, int(position.y)/PX, 3);
     kill();

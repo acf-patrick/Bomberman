@@ -29,7 +29,7 @@ public:
 
 	Player(MapManager*, int, int);
 
-	bool collide(const GameObject&) const override final;
+	bool collide(GameObject&) override final;
 	void update() override final;
 	void draw() override final;
 

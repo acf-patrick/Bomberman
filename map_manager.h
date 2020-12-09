@@ -16,8 +16,6 @@ private:
    int **map;
    int brick_count;
 
-   bool bombs_arr[MAP_H][MAP_W];
-
    Group bombs, &explosions;
 
 public:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "defs.h"
 #include "timer.h"
 #include "group.h"
 #include "object.h"
@@ -14,6 +15,8 @@ private:
     Timer timer, counter;
 
 public:
+    static bool array[MAP_H][MAP_W];
+
 	static int number;
 
     Bomb(int, int);

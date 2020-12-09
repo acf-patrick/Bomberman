@@ -3,13 +3,13 @@
 #include "explosion.h"
 #include "assetsmanager.h"
 
-Group Explosion::group;
+Group* Explosion::group = new Group;
 int** Explosion::map = nullptr;
 
 Explosion::Explosion(int x, int y, int portee):
     dt (100)
 {
-	group.add(this);
+	group->add(this);
 
 	range = portee;
 	state = 0;
@@ -33,6 +33,7 @@ Explosion::Explosion(int x, int y, int portee):
 		SDL_FillRect(surface[i], NULL, 0xff00ff);
 
 		// center
+		blast.create<Blast>(x, y);
 		SDL_Rect src = { 0, Sint16(i*PX), PX, PX }, center = { Sint16((size.x-PX)*0.5), Sint16((size.y-PX)*0.5) };
 		SDL_Rect dest(center);
 		SDL_BlitSurface(spritesheet, &src, surface[i], &dest);
@@ -55,6 +56,7 @@ Explosion::Explosion(int x, int y, int portee):
 				src.y = 0;
 				dest.y = 0;
 			}
+			blast.create<Blast>(x, y-k);
             SDL_BlitSurface(spritesheet, &src, surface[i], &dest);
 		}
 
@@ -74,6 +76,7 @@ Explosion::Explosion(int x, int y, int portee):
 				src.y = 2*PX;
 				dest.y = Sint16(size.y - PX);
 			}
+			blast.create<Blast>(x, y+k);
             SDL_BlitSurface(spritesheet, &src, surface[i], &dest);
 		}
 
@@ -93,6 +96,7 @@ Explosion::Explosion(int x, int y, int portee):
 				src.x = 0;
 				dest.x = 0;
 			}
+			blast.create<Blast>(x-k, y);
             SDL_BlitSurface(spritesheet, &src, surface[i], &dest);
 		}
 
@@ -112,6 +116,7 @@ Explosion::Explosion(int x, int y, int portee):
 				dest.x = Sint16(size.x-PX);
 				src.x = 2*PX;
 			}
+			blast.create<Blast>(x+k, y);
             SDL_BlitSurface(spritesheet, &src, surface[i], &dest);
 		}
 
@@ -142,7 +147,7 @@ void Explosion::update()
 	}
 }
 
-bool Explosion::collide(const GameObject& obj) const
+bool Explosion::collide(GameObject& obj)
 {
-	return false;
+    return (blast.firstObjectCollidingWith(obj) != nullptr);
 }

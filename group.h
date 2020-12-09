@@ -45,7 +45,7 @@ public:
 
     bool has(GameObject*);
 
-    GameObject* firstObjectCollidingWith(const GameObject&);
+    GameObject* firstObjectCollidingWith(GameObject&);
 
     using iterator = std::vector<GameObject*>::iterator;
 

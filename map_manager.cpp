@@ -8,13 +8,13 @@
 #include <cstdlib>
 
 MapManager::MapManager() :
-	explosions(Explosion::group)
+	explosions(*Explosion::group)
 {
     srand(time(0));
 
     for (int i=0; i<MAP_H; ++i)
 		for (int j=0; j<MAP_W; ++j)
-			bombs_arr[i][j] = false;
+			Bomb::array[i][j] = false;
 
     AssetManager &asset_manager = *AssetManager::instance;
 	sprites[WALL] = asset_manager.load_surface("./data/images/wall.png");
@@ -24,7 +24,10 @@ MapManager::MapManager() :
 }
 
 MapManager::~MapManager()
-{}
+{
+	// delete Explosion::group;
+	// Explosion::group = nullptr;
+}
 
 void MapManager::generate_map()
 {
@@ -94,10 +97,16 @@ void MapManager::draw()
 
 bool MapManager::checkCollision(GameObject *object)
 {
+	if (object == nullptr)
+		return false;
+
 	/* collision between objects */
 
     if (bombs.firstObjectCollidingWith(*object))
         return true;
+
+	if (explosions.firstObjectCollidingWith(*object))
+		return true;
 
 	/* collision between tiles and object */
 
@@ -120,9 +129,9 @@ bool MapManager::checkCollision(GameObject *object)
 // params : coordonnées anlay case
 GameObject* MapManager::addBomb(int x, int y)
 {
-	if (map[y][x] == GROUND or bombs_arr[y][x])
+	if (map[y][x] == GROUND and !Bomb::array[y][x])
 	{
-		bombs_arr[y][x] = true;
+		Bomb::array[y][x] = true;
 		return bombs.create<Bomb>(x*PX, y*PX);
 	}
 

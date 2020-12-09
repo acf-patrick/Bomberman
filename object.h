@@ -36,32 +36,18 @@ public:
 	void kill();
 
 	/* ........................................... */
-	virtual bool collide(const GameObject&) const;
-	virtual bool collide(const SDL_Rect&) const;
+	virtual bool collide(GameObject&);
+	virtual bool collide(SDL_Rect&);
 
-	/*
-	cas anty ohatra hoe nisy bomb nipoaka, dia nisy enemy
-	maromaro voa; rah destroy == true dia alàna tao amn'io
-	groupe io lay enemies.
-	miRetourne iz aveo hoe nis voa na tsia
-	*/
-	bool collide(Group*, bool _kill = false) const;
+	bool collide(Group*, bool _kill = false);
 
-    /*
-	otrotrn'io ambony io ihany fa au lieu hoe tng dia potehana
-	dia maazo liste anreo miEntrer en collision amty objet ity
-	dia hit eo zay atao...oatra hoe alaina alou ny position any,
-	inh oatra ny typenlay enemy...otrotrzany
-    */
-	std::vector<GameObject*> collide(const Group&) const;
+	std::vector<GameObject*> collide(Group&);
 	/* ........................................... */
 
-    /* mReturn anlay rect miEnglober anlay objet
-	sod mis ilàna azy any aoriana any
-    */
+
 	SDL_Rect getBoundingBox() const;
 
 friend class Group;
 };
 
-bool mutual_collision(const GameObject&, const GameObject&);
+bool mutual_collision(GameObject&, GameObject&);

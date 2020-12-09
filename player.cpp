@@ -59,7 +59,7 @@ void Player::update()
 {
 	if (firstContact)
 		if (!GameObject::collide(*firstContact))
-            firstContact = nullptr;
+			firstContact = nullptr;
 
 	if (!Game::keys[SDLK_SPACE])
 	{
@@ -119,7 +119,7 @@ void Player::updateFrame()
 	}
 }
 
-bool Player::collide(const GameObject& obj) const
+bool Player::collide(GameObject& obj)
 {
     if (firstContact)
 		return false;

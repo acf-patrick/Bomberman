@@ -5,6 +5,7 @@
 #include "object.h"
 #include "bomb.h"
 #include <ctime>
+#include <cstdlib>
 
 MapManager::MapManager() :
 	explosions(Explosion::group)
@@ -27,6 +28,10 @@ MapManager::~MapManager()
 
 void MapManager::generate_map()
 {
+    map = (int**)malloc(MAP_H*sizeof (int*));
+    for (int k=0; k<MAP_H; ++k)
+		map[k] = (int*)malloc(MAP_W*sizeof (int));
+
     for (int i = 0; i < MAP_H; i++)
     {
         for (int j = 0; j < MAP_W; j++)
@@ -47,6 +52,8 @@ void MapManager::generate_map()
         while (map[a][b] != GROUND or (a==1 and b==2) or (a==2 and b==1) or (a==1 and b==1));
         map[a][b] = BRICK;
     }
+
+    Explosion::map = map;
 }
 
 void MapManager::update()

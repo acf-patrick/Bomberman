@@ -8,3 +8,5 @@
 #define WIDTH 416
 #define HEIGHT MAP_H*PX
 #define FPS 60
+
+enum { WALL, GROUND, BRICK };

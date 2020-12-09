@@ -18,6 +18,7 @@ private:
 
 public:
 	static Group group;
+	static int **map;
 
 	// lay coordonnées, tonga dia coords ana case
 	// lay paramètre fanarany halalana hoe firy case ny portée anlay explosion

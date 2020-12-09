@@ -10,11 +10,10 @@ class GameObject;
 class MapManager
 {
 private:
-   enum { WALL, GROUND, BRICK };
 
    SDL_Surface *sprites[3];
 
-   int map[MAP_H][MAP_W];
+   int **map;
    int brick_count;
 
    bool bombs_arr[MAP_H][MAP_W];

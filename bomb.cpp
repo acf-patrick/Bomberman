@@ -7,7 +7,8 @@
 int Bomb::number = 0;
 bool Bomb::array[MAP_H][MAP_W];
 
-Bomb::Bomb(int x, int y)
+Bomb::Bomb(int x, int y, MapManager* m):
+    map(*m)
 {
     size.setCartesian(24, 24);
 
@@ -27,7 +28,7 @@ Bomb::Bomb(int x, int y)
 
 void Bomb::explode()
 {
-    array[int(position.x)/PX][int(position.y)/PX] = false;
+    array[int(position.y)/PX][int(position.x)/PX] = false;
     number--;
     new Explosion(int(position.x)/PX, int(position.y)/PX, 3);
     kill();
@@ -35,6 +36,8 @@ void Bomb::explode()
 
 void Bomb::update()
 {
+    if (map.checkCollision(this))
+        return explode();
     if (timer.get_elapsed_time() > 100)
     {
         cur_frame = (cur_frame+1)%3;

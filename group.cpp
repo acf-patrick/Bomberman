@@ -7,19 +7,18 @@ std::vector<GameObject*> Group::collector;
 
 Group::~Group()
 {
-	// already cleaned
-	if (!collector.empty())
-	{
-		for (auto &obj : collector)
-			delete obj;
-		collector.clear();
-	}
-
     for (int i = 0; i<(int)objects.size(); ++i)
     {
     	delete objects[i];
     	objects[i] = nullptr;
     }
+}
+
+void Group::clean()
+{
+	for (auto &obj : collector)
+		delete obj;
+	collector.clear();
 }
 
 void Group::update()

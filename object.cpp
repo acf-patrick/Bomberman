@@ -59,11 +59,12 @@ bool GameObject::collide(SDL_Rect& rect)
 	return collide(obj);
 }
 
-/* mety samy manana ny méthode "collide" ny o1 sy o2
-dia ts maints checkena daoly iz roa ... virtual mants iz ao
- */
 bool mutual_collision(GameObject& o1, GameObject& o2)
-{ return o1.collide(o2) and o2.collide(o1); }
+{
+	if (&o1 == &o2)
+		return false;
+	return o1.collide(o2) and o2.collide(o1);
+}
 
 bool GameObject::collide(Group *group, bool _kill)
 {

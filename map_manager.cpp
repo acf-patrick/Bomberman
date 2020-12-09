@@ -25,8 +25,9 @@ MapManager::MapManager() :
 
 MapManager::~MapManager()
 {
-	// delete Explosion::group;
-	// Explosion::group = nullptr;
+	delete Explosion::group;
+	Explosion::group = nullptr;
+    Group::clean();
 }
 
 void MapManager::generate_map()
@@ -132,7 +133,7 @@ GameObject* MapManager::addBomb(int x, int y)
 	if (map[y][x] == GROUND and !Bomb::array[y][x])
 	{
 		Bomb::array[y][x] = true;
-		return bombs.create<Bomb>(x*PX, y*PX);
+		return bombs.create<Bomb>(x*PX, y*PX, this);
 	}
 
 	return nullptr;

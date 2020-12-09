@@ -18,6 +18,8 @@ private:
 
 public:
 
+    static void clean();
+
     Group() {}
     virtual ~Group();
 
